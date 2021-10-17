@@ -18,9 +18,14 @@ export function showLog(...messages) {
 
 export function getCookie(cookies, name) {
     if(!cookies) return null;
-    const value = cookies;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
+    var nameEQ = name + "=";
+    var ca = cookies.split(';');
+	for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return null;
 }
 
 function getCookies(name)  {

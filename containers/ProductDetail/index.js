@@ -25,8 +25,6 @@ const DetailProduct = (props) => {
             <div className='col-md-6 mt-3'>
                 <h2 className='text-uppercase' >{product?.title}</h2>
                 <h5 className='text-uppercase' >${product?.price}</h5>
-                <h5 className='text-uppercase' >{'token:' + state.auth.token}</h5>
-                <h5 className='text-uppercase' >{'côkie:' +Cookies.get('_atc')}</h5>
                 <div className='row mx-0 d-flex justify-content-between'>
                     {
                         product?.inStock > 0 ?
