@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/dist/client/router'
 import {DataContext} from '../store/GlobalStore'
 import Cookie from 'js-cookie';
-import {removeCookies} from '../utils/commonFunctions'
+import {removeCookies, setCookies} from '../utils/commonFunctions'
 import {handleFetchData, getData} from '../utils/fetchData'
 const NavBar = () => {
     const router = useRouter()
@@ -22,7 +22,13 @@ const NavBar = () => {
     const handleLogout = async () => {
         removeCookies('refreshtoken');
         removeCookies('_atc');
-        
+        setCookies('refreshtoken', '')
+        //document.cookie = '_atc=' + encode;
+        //const encode = XORCipher.encode(process.env.NEXT_PUBLIC_ECRYPTED_KEY, data.access_token) 
+        // Cookie.set('_atc', encode, {
+        //     domain: process.env.DOMAIN
+        // })
+        setCookies('_atc', '');
         localStorage.removeItem('firstLogin');
         const token = state.auth.token;
         await handleFetchData(dispatch, getData, ['auth/signout', token], false, false)

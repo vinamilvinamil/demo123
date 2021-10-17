@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import {DataContext} from '../../store/GlobalStore';
 import {addToCart} from '../../store/Actions';
+import Cookies from 'js-cookie';
 
 const DetailProduct = (props) => {
     const [product] = useState(props.product)
@@ -24,7 +25,8 @@ const DetailProduct = (props) => {
             <div className='col-md-6 mt-3'>
                 <h2 className='text-uppercase' >{product?.title}</h2>
                 <h5 className='text-uppercase' >${product?.price}</h5>
-
+                <h5 className='text-uppercase' >{'token:' + state.auth.token}</h5>
+                <h5 className='text-uppercase' >{'côkie:' +Cookies.get('_atc')}</h5>
                 <div className='row mx-0 d-flex justify-content-between'>
                     {
                         product?.inStock > 0 ?
