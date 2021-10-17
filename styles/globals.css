@@ -14,3 +14,10 @@ a {
 * {
   box-sizing: border-box;
 }
+
+img {
+    object-fit: cover;
+}
+
+@import url('./loading.css');
+@import url('./product.css');
