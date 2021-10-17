@@ -5,6 +5,7 @@ import { useRouter } from 'next/dist/client/router'
 import {DataContext} from '../store/GlobalStore'
 import Cookie from 'js-cookie';
 import {removeCookies} from '../utils/commonFunctions'
+import {handleFetchData, getData} from '../utils/fetchData'
 const NavBar = () => {
     const router = useRouter()
     const [state, dispatch] = useContext(DataContext);
@@ -18,15 +19,13 @@ const NavBar = () => {
         }
     }
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
         removeCookies('refreshtoken');
         removeCookies('_atc');
-        // Cookie.remove('refreshtoken', {path: 'api/auth/accessToken', domain: process.env.DOMAIN});
-        // Cookie.remove('_atc', {
-        //     domain: process.env.DOMAIN
-        // })
         
         localStorage.removeItem('firstLogin');
+        const token = state.auth.token;
+        await handleFetchData(dispatch, getData, ['auth/signout', token], false, false)
         dispatch({
             type: 'AUTH',
             payload: {}
