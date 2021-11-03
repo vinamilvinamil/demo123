@@ -14,10 +14,14 @@ export const DataProvider = ({children}) => {
         const firstLogin = localStorage.getItem('firstLogin');
         if(firstLogin) {
             getData('auth/accessToken').then(res => {
-                if(res.err) return localStorage.removeItem('firstLogin');
+                if(res.err) {
+                    localStorage.removeItem('accessToken')
+                    return localStorage.removeItem('firstLogin');
+                }
                 removeCookies('_atc');
-                const encode = XORCipher.encode(process.env.NEXT_PUBLIC_ECRYPTED_KEY, res.data.access_token) 
-                setCookies('_atc', encode);
+                //const encode = XORCipher.encode(process.env.NEXT_PUBLIC_ECRYPTED_KEY, res.data.access_token) 
+                setCookies('_atc', res.data.access_token);
+                localStorage.setItem('accessToken', res.data.access_token)
                 dispatch({
                     type: 'AUTH',
                     payload: {
@@ -25,6 +29,18 @@ export const DataProvider = ({children}) => {
                         user: res.data.user
                     }
                 })
+            })
+        } else {
+            getData('auth/accessGuest').then(res => {
+                if(res.err) {
+                    localStorage.removeItem('accessToken')
+                    return localStorage.removeItem('firstLogin');
+                }
+                localStorage.setItem('accessToken', res.data.access_token)
+                removeCookies('_atc');
+                //const encode = XORCipher.encode(process.env.NEXT_PUBLIC_ECRYPTED_KEY, res.data.access_token) 
+                setCookies('_atc', res.data.access_token);
+                setCookies('refreshtoken', res.data.refresh_token, 7)
             })
         }
     }, []);

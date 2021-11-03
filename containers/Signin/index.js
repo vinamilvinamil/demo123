@@ -39,12 +39,13 @@ const Signin = () => {
         showLog('signin', data.user);
         setCookies('refreshtoken', data.refresh_token, 7)
         //document.cookie = '_atc=' + encode;
-        const encode = XORCipher.encode(process.env.NEXT_PUBLIC_ECRYPTED_KEY, data.access_token) 
+        //const encode = XORCipher.encode(process.env.NEXT_PUBLIC_ECRYPTED_KEY, data.access_token) 
         // Cookie.set('_atc', encode, {
         //     domain: process.env.DOMAIN
         // })
-        setCookies('_atc', encode);
+        setCookies('_atc', data.access_token);
         localStorage.setItem('firstLogin', true )
+        localStorage.setItem('accessToken', data.access_token)
     }
 
 

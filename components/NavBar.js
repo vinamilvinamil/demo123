@@ -30,6 +30,7 @@ const NavBar = () => {
         // })
         setCookies('_atc', '');
         localStorage.removeItem('firstLogin');
+        localStorage.removeItem('accessToken')
         const token = state.auth.token;
         await handleFetchData(dispatch, getData, ['auth/signout', token], false, false)
         dispatch({
