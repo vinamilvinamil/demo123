@@ -51,7 +51,7 @@ class AudioPlayer extends PureComponent {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({
       active: nextProps.songs[0],
       songs: nextProps.songs,
