@@ -62,7 +62,7 @@ export default DetailProduct;
 
 const songs = [
     {
-      url: `http://data.thuviensachnoi.vn/KiNangQuanTrong/DungBaoGioDiAnMotMinhBad/DungBaoGioDiAnMotMinhC02.mp3`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/616304e49e7759d73a21dbd2`,
       cover:
         'http://www.nossoarmario.com/blog/wp-content/uploads/2015/01/redfoo.jpg',
       artist: {
@@ -80,7 +80,7 @@ const songs = [
       },
     },
     {
-      url: 'https://a.tumblr.com/tumblr_mlyactVSyX1qejx3lo1.mp3',
+      url: 'http://a.tumblr.com/tumblr_mlyactVSyX1qejx3lo1.mp3',
       cover:
         'http://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2015/06/daft-punk.jpg',
       artist: {
