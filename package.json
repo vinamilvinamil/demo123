@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@netlify/plugin-nextjs": "^3.9.2",
     "aws-sdk": "^2.1021.0",
     "bcrypt": "^5.0.1",
     "classnames": "^2.2.6",
