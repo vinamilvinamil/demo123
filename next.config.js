@@ -38,10 +38,7 @@ module.exports = {
                     key: 'X-DNS-Prefetch-Control',
                     value: 'on'
                 },
-                {
-                    key: 'Referrer-Policy',
-                    value: 'same-origin',
-                },
+                
 
             ]
           },
