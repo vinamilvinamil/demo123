@@ -62,7 +62,7 @@ export default DetailProduct;
 
 const songs = [
     {
-      url: `http://files.giaoduccongdong.com/ThuVienSachNoi/VanHoaGiaoDuc/TieuThuyet_VanHoc/TTVH_VietNam/KeCuopBenBoi/03.KeCuoiBenBoi-P03.mp3`,
+      url: `http://data.thuviensachnoi.vn/KiNangQuanTrong/DungBaoGioDiAnMotMinhBad/DungBaoGioDiAnMotMinhC02.mp3`,
       cover:
         'http://www.nossoarmario.com/blog/wp-content/uploads/2015/01/redfoo.jpg',
       artist: {
