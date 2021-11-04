@@ -62,7 +62,7 @@ export default DetailProduct;
 
 const songs = [
     {
-      url: 'http://localhost:3000/api/product/616304e49e7759d73a21dbd2',
+      url: `${NEXT_PUBLIC_BASE_URL}/api/product/616304e49e7759d73a21dbd2`,
       cover:
         'http://www.nossoarmario.com/blog/wp-content/uploads/2015/01/redfoo.jpg',
       artist: {
