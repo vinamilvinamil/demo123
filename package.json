@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mapbox/node-pre-gyp": "^1.0.6",
     "@netlify/plugin-nextjs": "^3.9.2",
     "aws-sdk": "^2.1021.0",
     "bcrypt": "^5.0.1",
