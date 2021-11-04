@@ -20,6 +20,7 @@ const pipeline = promisify(stream.pipeline);
 const getProduct = async (req, res) => {
     try {
         const {id} = req.query;
+        console.log('getproduct', id);
         const product = await Products.findById(id);
         if(!product) return res.status(400).json({err: 'This product does not exist.'})
 
