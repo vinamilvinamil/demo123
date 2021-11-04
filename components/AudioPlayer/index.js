@@ -237,6 +237,7 @@ class AudioPlayer extends PureComponent {
 
     return (
       <div className="player-container">
+          <audio src='http://data.thuviensachnoi.vn/KiNangQuanTrong/DungBaoGioDiAnMotMinhBad/DungBaoGioDiAnMotMinhC02.mp3' controls/>
           <div>
               <ul style={{padding: '30px'}}>
                   {
