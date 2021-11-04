@@ -241,17 +241,17 @@ class AudioPlayer extends PureComponent {
               <ul style={{padding: '30px'}}>
                   {
                       (songs || []).map((item, index) => {
-                        return <li key = {index} style={{ listStyle: 'none', padding: '10px' , border: '1px solid gray', marginBottom: '5px', backgroundColor: current == index ? 'gray' : '', color: current == index ? 'white' : ''}} onClick={() => this.playAt(index)}>{item.artist.song}</li>
+                        return <li key = {index} style={{ listStyle: 'none', padding: '10px' , border: '1px solid gray', marginBottom: '5px', backgroundColor: current == index ? 'gray' : '', color: current == index ? 'white' : ''}} onClick={() => this.playAt(index)}>{item.artist.song } - {item.url}</li>
                       })
                   }
               </ul>
           </div>
-        {/* <div
+        <div
           className={coverClass}
           style={{
             backgroundImage: `url(${currentSong.cover || ''})`,
           }}
-        ></div> */}
+        ></div>
 
         <div className="artist-info">
           <h2 className="artist-name">{currentSong.artist.name}</h2>
