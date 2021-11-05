@@ -62,7 +62,7 @@ export default DetailProduct;
 
 const songs = [
     {
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/616304e49e7759d73a21dbd2`,
+      url: `https://archive.org/download/doc-vi-bat-ky-ai-david-j.-lieberman-sachnoi.cc/%C4%90o%CC%A3c%20Vi%CC%A3%20Ba%CC%82%CC%81t%20Ky%CC%80%20Ai%20-%20David%20J.%20Lieberman%20-%201.mp3`,
       cover:
         'http://www.nossoarmario.com/blog/wp-content/uploads/2015/01/redfoo.jpg',
       artist: {
