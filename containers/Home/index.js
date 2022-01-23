@@ -3,7 +3,6 @@ import Head from 'next/head'
 import ProductItem from '../../components/products/ProductItem';
 import CourseList from '../CourseList';
 const Home = (props) => {
-    const [products, setProducts] = useState(props.products);
     return (
     <div>
         <div className="container">
