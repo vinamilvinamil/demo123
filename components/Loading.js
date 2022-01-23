@@ -55,7 +55,7 @@ const LoadingProgress = ({loading}) => {
     }, [loading])
 
     return (
-        <div className="position-fixed w-100 loading align-items-start" style={{top: 0, left: 0, zIndex: 9999}}>
+        <div className="position-fixed w-100 loading align-items-start" style={{top: 0, left: 0, zIndex: 1056}}>
             {
                 progress == 101 || progress == 0 ?
                 null :

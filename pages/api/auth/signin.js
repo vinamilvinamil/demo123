@@ -24,21 +24,8 @@ const login = async (req, res) => {
         if(!user) return returnResponse(res, 400, 'This user does not exist');
         const isMatch = await bcrypt.compare(password, user.password)
         if(!isMatch) return returnResponse(res, 400, 'Incorrect password.')
-        showLog('api signin', user);
         const access_token = createAccessToken({id: user._id})
         const refresh_token = createRefreshToken({id: user._id});
-        // res.json({
-        //     msg: 'Register success',
-        //     access_token,
-        //     refresh_token,
-        //     user: {
-        //         name: user.name,
-        //         email: user.email,
-        //         role: user.role,
-        //         avatar: user.avatar,
-        //         root: user.root
-        //     }
-        // });
         returnResponse(res, 200, 'Register success', {
             access_token,
             refresh_token,

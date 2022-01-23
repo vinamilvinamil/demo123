@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken'
 import {createAccessToken, createRefreshToken} from '../../../utils/generateToken';
 import {returnResponse} from '../../../utils/commonFunctions';
 connectDB();
-
 const accessToken = async (req, res) => {
     try {
         const rf_token = req.cookies.refreshtoken;

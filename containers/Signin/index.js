@@ -18,7 +18,7 @@ const Signin = () => {
     const router = useRouter();
 
     useEffect(() => {
-        if(Object.keys(auth).length != 0) router.push('/')
+        if(Object.keys(auth).length != 0) window.location.href = '/admin'
     }, [auth])
 
     const handleChangeInput = (e) => {
@@ -38,6 +38,7 @@ const Signin = () => {
         }})
         showLog('signin', data.user);
         setCookies('refreshtoken', data.refresh_token, 7)
+        setCookies('accessToken', data.access_token);
         //document.cookie = '_atc=' + encode;
         //const encode = XORCipher.encode(process.env.NEXT_PUBLIC_ECRYPTED_KEY, data.access_token) 
         // Cookie.set('_atc', encode, {
@@ -45,7 +46,10 @@ const Signin = () => {
         // })
         setCookies('_atc', data.access_token);
         localStorage.setItem('firstLogin', true )
-        localStorage.setItem('accessToken', data.access_token)
+        //localStorage.setItem('accessToken', data.access_token)
+        localStorage.setItem('role', 'admin');
+        localStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem('root', data.user.root);
     }
 
 

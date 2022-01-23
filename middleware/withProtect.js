@@ -14,6 +14,7 @@ const withProtect = async (handler, req, res) => {
             req.user = user;
             return handler.apply(this, [req, res]);
         } catch (err) {
+            console.log('withprotect', err);
             return res.status(401).json({
                 err: 'Please login to access'
             })

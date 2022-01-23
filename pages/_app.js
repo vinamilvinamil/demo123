@@ -2,14 +2,19 @@ import '../styles/globals.css'
 import Layout from '../components/Layout'
 import { DataProvider } from '../store/GlobalStore';
 import Script from 'next/script'
+import App from 'next/app'
+import menu from '../common/menu';
 
-function MyApp({ Component, pageProps }) {
+function MyApp(props) {
+    const { Component, pageProps, menus } = props;
     return (
         <DataProvider>
-            <Script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" strategy="beforeInteractive"></Script>
-            <Script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" ></Script>
-            <Script src="https://kit.fontawesome.com/a076d05399.js"></Script>
-            <Layout>
+            
+            <Script src="/static/bootstrap.bundle.min.js"></Script>
+            <Script src="/static/choices.min.js" strategy='beforeInteractive'></Script>
+            <Script src="/static/functions.js"></Script>
+            <Script src="/static/OverlayScrollbars.min.js"></Script>
+            <Layout menus = {menus}>
                 <Component {...pageProps} />
             </Layout>
         </DataProvider>
@@ -17,5 +22,10 @@ function MyApp({ Component, pageProps }) {
     )
 
 }
+
+MyApp.getInitialProps = async (appContext) => {
+    const appProps = await App.getInitialProps(appContext)
+    return { ...appProps, menus: menu };
+};
 
 export default MyApp

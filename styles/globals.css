@@ -15,10 +15,12 @@ a {
   box-sizing: border-box;
 }
 
-img {
-    object-fit: cover;
-}
 
 @import url('./loading.css');
 @import url('./product.css');
 @import url('./audioplayer.css');
+@import url('./style.css');
+@import url('./all.min.css');
+@import url('./bootstrap-icons.css');
+@import url('./choices.min.css');
+@import url('./OverlayScrollbars.min.css');
