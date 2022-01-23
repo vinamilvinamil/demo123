@@ -18,8 +18,8 @@ const auth = async (req, res) => {
 export const runCors =  async (req, res) => {
     await NextCors(req, res, {
         // Options
-        methods: [],
-        origin: 'abc.xyz',
+        methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+        origin: process.env.CORS_URL,
         optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
      });
      
