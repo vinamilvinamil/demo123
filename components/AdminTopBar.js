@@ -127,7 +127,7 @@ const TopBar = () => {
                                                         </div>
                                                         <div>
                                                             <h6 className="mb-1">Larry Lawson Added a new course</h6>
-                                                            <p className="small text-body m-0">What's new! Find out about new features</p>
+                                                            <p className="small text-body m-0">What&apos;s new! Find out about new features</p>
                                                             <u className="small">View detail</u>
                                                         </div>
                                                     </a>
@@ -158,7 +158,7 @@ const TopBar = () => {
                                                         </div>
                                                         <div>
                                                             <h6 className="mb-1">Update v2.3 completed successfully</h6>
-                                                            <p className="small text-body m-0">What's new! Find out about new features</p>
+                                                            <p className="small text-body m-0">What&apos;s new! Find out about new features</p>
                                                             <small className="text-body">5 min ago</small>
                                                         </div>
                                                     </a>
