@@ -1,7 +1,7 @@
 
-import AdminUser from '../../containers/AdminUser';
-import withAuthen from '../../containers/withAuthen';
-import {getData, parseToken} from '../../utils/fetchData'
+import AdminUser from '../../../containers/AdminUser';
+import withAuthen from '../../../containers/withAuthen';
+import {getData, parseToken} from '../../../utils/fetchData'
 export async function getServerSideProps({req}) {
     const token = parseToken(req);
     const params = {

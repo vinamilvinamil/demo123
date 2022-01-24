@@ -4,13 +4,14 @@ import Toast from '../../components/Toast';
 import {DataContext} from '../../store/GlobalStore';
 import {postData, handleFetchData, getData} from '../../utils/fetchData'
 import {useRouter} from 'next/router'
-const UserItem = ({id, fullname, username, role, joindate, root, resetPassword}) => (
+import { imageUpload } from '../../utils/ImageUpload';
+const UserItem = ({id, fullname, username, role, joindate}) => (
     <tr>
         <td>
             <div className="d-flex align-items-center position-relative">
 
-                <div className="avatar avatar-md">
-                    <img src="/Eduport - LMS, Education and Course Theme_files/01.jpg" className="rounded-circle" alt="" />
+                <div className="w-60px">
+                    <img src="/Eduport - LMS, Education and Course Theme_files/01.jpg" className="rounded" alt="" />
                 </div>
 
                 <h6 className="mb-0 ms-2">
@@ -18,17 +19,11 @@ const UserItem = ({id, fullname, username, role, joindate, root, resetPassword})
                 </h6>
             </div>
         </td>
+       
         <td>
             <div className="d-flex align-items-center">
                 <div className="ms-2">
-                    <h6 className="mb-0 fw-light">{username}</h6>
-                </div>
-            </div>
-        </td>
-        <td>
-            <div className="d-flex align-items-center">
-                <div className="ms-2">
-                    <h6 className="mb-0 fw-light">{role}</h6>
+                    <h6 className="mb-0 fw-light">role</h6>
                 </div>
             </div>
         </td>
@@ -39,12 +34,6 @@ const UserItem = ({id, fullname, username, role, joindate, root, resetPassword})
         <td>
             <a href="#" className="btn btn-sm btn-success me-1 mb-1 mb-md-0">Edit</a>
             <button className="btn btn-sm btn-danger mb-0 me-1">Delete</button>
-            {
-                root ? 
-                <button className="btn btn-sm btn-danger mb-0" onClick={() => resetPassword(id)}>Reset Password</button>
-                : null
-            }
-           
         </td>
     </tr>
 )
@@ -64,15 +53,15 @@ const AdminUser = (props) => {
     }, [])
     const submitNewUser = async (userData) => {
         console.log('submitnewUser', userData);
-        const data = await handleFetchData(dispatch, postData, ['auth/register', userData], true, true, true) 
-        if(data) {
-            router.push('admin/user')
+        const thumbnail = userData.thumbnail;
+        let media
+        if(thumbnail) {
+            media = await imageUpload(thumbnail);
+            console.log('media', media);
+            userData.thumbnail = media.url;
         }
-    }
-
-    const resetPassword = async (id) => {
-        console.log('submitnewUser', id);
-        const data = await handleFetchData(dispatch, postData, ['auth/resetPassword', {id: id}], true, true, true) 
+        console.log('end', userData);
+        const data = await handleFetchData(dispatch, postData, ['auth/courseCategory', userData], true, true, true) 
         if(data) {
             //router.push('admin/user')
         }
@@ -88,13 +77,13 @@ const AdminUser = (props) => {
         setUserData(data);
         setCurrentIndex(page);
     }
-    const users = userData.users.map(item => {
+    const users = (userData.data || []).map(item => {
         return {
             id: item._id,
-            fullname: item.name,
+            fullname: item.title,
             username: item.email,
             joindate: item.createdAt,
-            role: item.root ? 'root' : item.role
+            role: 1
         }
     });
 
@@ -104,8 +93,8 @@ const AdminUser = (props) => {
             <Modal modalTitle='Create User' show={showModal} onClose ={() => setShowModal(false)} onSubmit={submitNewUser}/>
             <div className="row mb-3">
                 <div className="col-12 d-sm-flex justify-content-between align-items-center">
-                    <h1 className="h3 mb-2 mb-sm-0">User Manager</h1>
-                    <a className="btn btn-sm btn-primary mb-0" onClick={(e) => {console.log('ss');setShowModal(true)}}>Create new User</a>
+                    <h1 className="h3 mb-2 mb-sm-0">Course Category Manager</h1>
+                    <a className="btn btn-sm btn-primary mb-0" onClick={(e) => {console.log('ss');setShowModal(true)}}>Create new Category</a>
                 </div>
             </div>
 
@@ -133,10 +122,9 @@ const AdminUser = (props) => {
 
                             <thead>
                                 <tr>
-                                    <th scope="col" className="border-0 rounded-start">Full name</th>
-                                    <th scope="col" className="border-0">Username</th>
-                                    <th scope="col" className="border-0">Role</th>
-                                    <th scope="col" className="border-0">Join date</th>
+                                    <th scope="col" className="border-0 rounded-start">Course category Name</th>
+                                    <th scope="col" className="border-0">Course Numbers</th>
+                                    <th scope="col" className="border-0">Created at</th>
                                     <th scope="col" className="border-0 rounded-end">Action</th>
                                 </tr>
                             </thead>
@@ -145,7 +133,7 @@ const AdminUser = (props) => {
                             <tbody>
                                 {
                                     users.map((item, index) => {
-                                        return <UserItem id={item.id} resetPassword = {(id) => resetPassword(id)} fullname = {item.fullname} username={item.username} joindate = {item.joindate} role={item.role} key={index} root = {root}/>
+                                        return <UserItem id={item.id} fullname = {item.fullname} username={item.username} joindate = {item.joindate} role={item.role} key={index} root = {root}/>
                                     })
                                 }
                             </tbody>

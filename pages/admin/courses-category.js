@@ -1,5 +1,5 @@
 
-import AdminUser from '../../containers/AdminUser';
+import AdminCourseCategory from '../../containers/AdminCourseCategory';
 import withAuthen from '../../containers/withAuthen';
 import {getData, parseToken} from '../../utils/fetchData'
 export async function getServerSideProps({req}) {
@@ -8,7 +8,8 @@ export async function getServerSideProps({req}) {
         pageIndex: 1,
         pageSize: 10
     }
-    const res = await getData('auth/user', params, token, false);
+    const res = await getData('auth/courseCategory', params, token, false);
+    console.log(res)
     return {
         props: {
             data: res.data || null
@@ -16,4 +17,4 @@ export async function getServerSideProps({req}) {
     }
 }
 
-export default withAuthen(AdminUser);
+export default withAuthen(AdminCourseCategory);

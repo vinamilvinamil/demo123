@@ -28,6 +28,7 @@ export const getData = async (url, params, token, isFE = true) => {
         if(status == 401)
             Router.reload();
     }
+    console.log(res);
     const data = await res.json();
     return data;
 }

@@ -40,8 +40,8 @@ const NavBar = () => {
                          </a>
 
                             <ul className="nav collapse flex-column" id="collapsepage" data-bs-parent="#navbar-sidebar">
-                                <li className="nav-item"> <a className="nav-link" href="https://eduport.webestica.com/admin-course-list.html">All Courses</a></li>
-                                <li className="nav-item"> <a className="nav-link" href="https://eduport.webestica.com/admin-course-category.html">Course Category</a></li>
+                                <li className="nav-item"> <Link  href="/admin/courses"><a className="nav-link">All Courses</a></Link></li>
+                                <li className="nav-item"> <Link href='/admin/courses-category'><a className="nav-link" >Course Category</a></Link></li>
                                 <li className="nav-item"> <a className="nav-link" href="https://eduport.webestica.com/admin-course-detail.html">Course Detail</a></li>
                             </ul>
                         </li>
