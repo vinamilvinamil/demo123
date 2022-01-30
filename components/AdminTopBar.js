@@ -95,7 +95,9 @@ const TopBar = () => {
 
                             <li className="nav-item ms-2 ms-md-3 dropdown">
 
-                                <a className="btn btn-light btn-round mb-0" href="https://eduport.webestica.com/admin-dashboard.html#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                <a className="btn btn-light btn-round mb-0" href="https://eduport.webestica.com/admin-dashboard.html#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside"
+                                    
+                                >
                                     <i className="bi bi-bell fa-fw"></i>
                                 </a>
 
@@ -186,7 +188,8 @@ const TopBar = () => {
 
                             <li className="nav-item ms-2 ms-md-3 dropdown">
 
-                                <a className="avatar avatar-sm p-0" href="https://eduport.webestica.com/admin-dashboard.html#" id="profileDropdown" role="button" data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a className="avatar avatar-sm p-0" href="https://eduport.webestica.com/admin-dashboard.html#" id="profileDropdown" role="button" data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false"
+                                onClick={() => showMenuBar()}>
                                     <img className="avatar-img rounded-circle" src="/Eduport - LMS, Education and Course Theme_files/01.jpg" alt="avatar" />
                                 </a>
 

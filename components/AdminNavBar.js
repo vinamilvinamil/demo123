@@ -33,7 +33,10 @@ const NavBar = () => {
                 <div className="offcanvas-body sidebar-content d-flex flex-column bg-dark">
                     <ul className="navbar-nav flex-column" id="navbar-sidebar">
 
-                        <li className="nav-item ms-2 my-2">Pages
+                        <li className="nav-item ms-2 my-2">Pages 
+                            <span className='navbar-toggler-animation'>
+                                close
+                            </span>
                         </li>
 
 
@@ -43,16 +46,17 @@ const NavBar = () => {
                          </a>
 
                             <ul className="nav collapse flex-column" id="collapsepage" data-bs-parent="#navbar-sidebar">
-                                <li className="nav-item"> <a href="/admin/courses" className="nav-link">All Courses</a></li>
-                                <li className="nav-item"> <a href='/admin/courses-category' className="nav-link" >Course Category</a></li>
+                                <li className="nav-item"> <Link  href="/admin/courses"><a className="nav-link">All Courses</a></Link></li>
+                                <li className="nav-item"> <Link href='/admin/courses-category'><a className="nav-link" >Course Category</a></Link></li>
                                 <li className="nav-item"> <a className="nav-link" href="https://eduport.webestica.com/admin-course-detail.html">Course Detail</a></li>
                             </ul>
                         </li>
 
 
-                        <li className="nav-item">
-                            <a className="nav-link" href="/admin/user"><i className="fas fa-user-graduate fa-fw me-2"></i>User</a>
-                       
+                        <li className="nav-item"> 
+                        <Link href="/admin/user">
+                            <a className="nav-link" ><i className="fas fa-user-graduate fa-fw me-2"></i>User</a>
+                        </Link>
                         </li>
 
 
