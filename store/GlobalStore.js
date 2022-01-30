@@ -6,7 +6,7 @@ import {XORCipher, setCookies, removeCookies} from '../utils/commonFunctions'
 export const DataContext = createContext();
 
 export const DataProvider = ({children}) => {
-    const initialState = {notify: {}, auth: {}, cart: []}
+    const initialState = {notify: {}, auth: {}, cart: [], menuClosed: true}
     const [state, dispatch] = useReducer(reducers, initialState )
     
     return (

@@ -8,6 +8,7 @@ const TopBar = () => {
     const [state, dispatch] = useContext(DataContext);
     const [user, setUser] = useState({});
     const { auth} = state;
+    const [menuClosed, setMemuClosed] = useState(true);
     const handleLogout = async () => {
         
         const token = localStorage.getItem('accessToken');
@@ -34,6 +35,12 @@ const TopBar = () => {
         window.location.href = '/';
     }
 
+    const showMenuBar = () => {
+        dispatch({
+            type: 'MENU'
+        })
+    }
+
     useEffect(() => {
         if(localStorage) {
             const userLocal = JSON.parse(localStorage.getItem('user'));
@@ -53,7 +60,8 @@ const TopBar = () => {
                     </div>
 
                     <div className="navbar-expand-xl sidebar-offcanvas-menu">
-                        <button className="navbar-toggler me-auto" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar" aria-expanded="false" aria-label="Toggle navigation" data-bs-auto-close="outside">
+                        <button className="navbar-toggler me-auto" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar" aria-expanded="false" aria-label="Toggle navigation" data-bs-auto-close="outside" 
+                        onClick={() => showMenuBar()}>
                             <i className="bi bi-text-right fa-fw h2 lh-0 mb-0 rtl-flip" data-bs-target="#offcanvasMenu"> </i>
                         </button>
                     </div>

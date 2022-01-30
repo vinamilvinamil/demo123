@@ -5,13 +5,13 @@ import {DataContext} from '../../store/GlobalStore';
 import {postData, handleFetchData, getData} from '../../utils/fetchData'
 import {useRouter} from 'next/router'
 import { imageUpload } from '../../utils/ImageUpload';
-const UserItem = ({id, fullname, username, role, joindate}) => (
+const UserItem = ({id, fullname, thumbnail, role, joindate}) => (
     <tr>
         <td>
             <div className="d-flex align-items-center position-relative">
 
                 <div className="w-60px">
-                    <img src="/Eduport - LMS, Education and Course Theme_files/01.jpg" className="rounded" alt="" />
+                    <img src={thumbnail || "/Eduport - LMS, Education and Course Theme_files/01.jpg"} className="rounded" alt="" />
                 </div>
 
                 <h6 className="mb-0 ms-2">
@@ -56,6 +56,7 @@ const AdminUser = (props) => {
         const thumbnail = userData.thumbnail;
         let media
         if(thumbnail) {
+            dispatch({type: 'NOTIFY', payload: {loading: true, blur: true}})
             media = await imageUpload(thumbnail);
             console.log('media', media);
             userData.thumbnail = media.url;
@@ -63,7 +64,8 @@ const AdminUser = (props) => {
         console.log('end', userData);
         const data = await handleFetchData(dispatch, postData, ['auth/courseCategory', userData], true, true, true) 
         if(data) {
-            //router.push('admin/user')
+            setShowModal(false);
+            onPageChange(1);
         }
     }
 
@@ -73,7 +75,7 @@ const AdminUser = (props) => {
             pageSize: 10
         }
         const token = localStorage.getItem('accessToken');
-        const data = await handleFetchData(dispatch, getData, ['auth/user', params, token], false, true);
+        const data = await handleFetchData(dispatch, getData, ['auth/courseCategory', params, token], false, true);
         setUserData(data);
         setCurrentIndex(page);
     }
@@ -83,7 +85,8 @@ const AdminUser = (props) => {
             fullname: item.title,
             username: item.email,
             joindate: item.createdAt,
-            role: 1
+            role: 1,
+            thumbnail: item.thumbnail ? item.thumbnail.replace('image/upload', 'image/upload//c_thumb,w_200,g_face') : null
         }
     });
 
@@ -133,7 +136,7 @@ const AdminUser = (props) => {
                             <tbody>
                                 {
                                     users.map((item, index) => {
-                                        return <UserItem id={item.id} fullname = {item.fullname} username={item.username} joindate = {item.joindate} role={item.role} key={index} root = {root}/>
+                                        return <UserItem id={item.id} fullname = {item.fullname} thumbnail={item.thumbnail} joindate = {item.joindate} role={item.role} key={index}/>
                                     })
                                 }
                             </tbody>

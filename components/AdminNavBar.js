@@ -1,9 +1,11 @@
 import React, { useContext, useState } from 'react'
+import { DataContext } from '../store/GlobalStore'
 import Link from 'next/link'
 const NavBar = () => {
-
+    const [state] = useContext(DataContext);
+    const { menuClosed} = state;
     return (
-        <nav className="navbar sidebar navbar-expand-xl navbar-dark bg-dark">
+        <nav className={`navbar sidebar navbar-expand-xl navbar-dark bg-dark `} style={menuClosed ? {} : {left: 0}}>
             <div className="d-flex align-items-center">
                 <Link href="/admin">
                     <a className="navbar-brand" >
@@ -22,16 +24,17 @@ const NavBar = () => {
                     </div>
                 </div>
 
-                <div className="os-padding">
+                {/* <div className="os-padding">
                     <div className="os-viewport os-viewport-native-scrollbars-invisible os-viewport-native-scrollbars-overlaid" tabIndex="-1" style={{ overflowY: 'scroll' }}>
                         <div className="os-content" style={{ width: '100%', height: '100%', padding: 0, float: 'left' }}>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 <div className="offcanvas-body sidebar-content d-flex flex-column bg-dark">
                     <ul className="navbar-nav flex-column" id="navbar-sidebar">
 
-                        <li className="nav-item ms-2 my-2">Pages</li>
+                        <li className="nav-item ms-2 my-2">Pages
+                        </li>
 
 
                         <li className="nav-item">
@@ -40,17 +43,16 @@ const NavBar = () => {
                          </a>
 
                             <ul className="nav collapse flex-column" id="collapsepage" data-bs-parent="#navbar-sidebar">
-                                <li className="nav-item"> <Link  href="/admin/courses"><a className="nav-link">All Courses</a></Link></li>
-                                <li className="nav-item"> <Link href='/admin/courses-category'><a className="nav-link" >Course Category</a></Link></li>
+                                <li className="nav-item"> <a href="/admin/courses" className="nav-link">All Courses</a></li>
+                                <li className="nav-item"> <a href='/admin/courses-category' className="nav-link" >Course Category</a></li>
                                 <li className="nav-item"> <a className="nav-link" href="https://eduport.webestica.com/admin-course-detail.html">Course Detail</a></li>
                             </ul>
                         </li>
 
 
-                        <li className="nav-item"> 
-                        <Link href="/admin/user">
-                            <a className="nav-link" ><i className="fas fa-user-graduate fa-fw me-2"></i>User</a>
-                        </Link>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/admin/user"><i className="fas fa-user-graduate fa-fw me-2"></i>User</a>
+                       
                         </li>
 
 

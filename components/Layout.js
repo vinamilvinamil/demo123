@@ -10,7 +10,6 @@ const Layout = ({ children, menus }) => {
     const [admin, setAdmin] = React.useState(false);
     const router = useRouter();
     React.useEffect(() => {
-        console.log('layout useect', localStorage, window?.localStorage);
         if (localStorage) {
             let shouldShow = true;
             const role = localStorage.getItem("role");
