@@ -2,10 +2,10 @@ import { useState, useEffect, useContext } from 'react'
 import Modal from './CreateUserModal';
 import Toast from '../../components/Toast';
 import {DataContext} from '../../store/GlobalStore';
-import {postData, handleFetchData, getData} from '../../utils/fetchData'
+import {postData, handleFetchData, getData, deleteData} from '../../utils/fetchData'
 import {useRouter} from 'next/router'
-import { imageUpload } from '../../utils/ImageUpload';
-const UserItem = ({id, fullname, thumbnail, role, joindate}) => (
+import { deleteImageUpload, imageUpload } from '../../utils/ImageUpload';
+const CategoryItem = ({id, name, thumbnail, actived, numCourse, joindate , onDelete, onUpdate}) => (
     <tr>
         <td>
             <div className="d-flex align-items-center position-relative">
@@ -15,7 +15,7 @@ const UserItem = ({id, fullname, thumbnail, role, joindate}) => (
                 </div>
 
                 <h6 className="mb-0 ms-2">
-                    <a href="#" className="stretched-link">{fullname}</a>
+                    <a href="#" className="stretched-link">{name}</a>
                 </h6>
             </div>
         </td>
@@ -23,17 +23,25 @@ const UserItem = ({id, fullname, thumbnail, role, joindate}) => (
         <td>
             <div className="d-flex align-items-center">
                 <div className="ms-2">
-                    <h6 className="mb-0 fw-light">role</h6>
+                    <h6 className="mb-0 fw-light">{numCourse}</h6>
                 </div>
             </div>
         </td>
+        <td>
+            <div className="d-flex align-items-center">
+                <div className="ms-2">
+                    <h6 className="mb-0 fw-light">{actived ? 'true' : 'false'}</h6>
+                </div>
+            </div>
+        </td>
+
         <td>
             {joindate}
         </td>
 
         <td>
-            <a href="#" className="btn btn-sm btn-success me-1 mb-1 mb-md-0">Edit</a>
-            <button className="btn btn-sm btn-danger mb-0 me-1">Delete</button>
+            <button className="btn btn-sm btn-success me-1 mb-1 mb-md-0" onClick={() => onUpdate(id)}>Edit</button>
+            <button className="btn btn-sm btn-danger mb-0 me-1" onClick={() => onDelete(id)}>Delete</button>
         </td>
     </tr>
 )
@@ -41,6 +49,8 @@ const UserItem = ({id, fullname, thumbnail, role, joindate}) => (
 const AdminUser = (props) => {
     const [showModal, setShowModal] = useState(false);
     const [userData, setUserData] = useState(props.data);
+    const [userUpdate, setUserUpdate] = useState(null);
+    const [isUpdate, setIsUpdate] = useState(false);
     const [state, dispatch] = useContext(DataContext);
     const [root, setRoot] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(1);
@@ -52,8 +62,7 @@ const AdminUser = (props) => {
         }
     }, [])
     const submitNewUser = async (userData) => {
-        console.log('submitnewUser', userData);
-        const thumbnail = userData.thumbnail;
+        const thumbnail = userData.thumbnailFile;
         let media
         if(thumbnail) {
             dispatch({type: 'NOTIFY', payload: {loading: true, blur: true}})
@@ -61,10 +70,19 @@ const AdminUser = (props) => {
             console.log('media', media);
             userData.thumbnail = media.url;
         }
-        console.log('end', userData);
         const data = await handleFetchData(dispatch, postData, ['auth/courseCategory', userData], true, true, true) 
         if(data) {
             setShowModal(false);
+            onPageChange(1);
+        }
+    }
+
+    const onDelete = async (id) => {
+        console.log('delete', id);
+        //public_id: "nextjs_media/uejweh2350bjg4xlessy"
+
+        const data = await handleFetchData(dispatch, deleteData, ['auth/courseCategory', id], true, true, true);
+        if(data) {
             onPageChange(1);
         }
     }
@@ -79,25 +97,45 @@ const AdminUser = (props) => {
         setUserData(data);
         setCurrentIndex(page);
     }
+
+    const onUpdate = (id) => {
+        const userNeedUpdateArr = (userData.data || [] ).filter(item => item._id == id);
+        if(userNeedUpdateArr?.length > 0) {
+            setUserUpdate(userNeedUpdateArr[0]);
+        } else {
+            setUserUpdate(null);
+        }
+        setIsUpdate(true);
+        setShowModal(true);
+    }
+
+    const onClose = () => {
+        setUserUpdate(null);
+        setIsUpdate(false);
+        setShowModal(false);
+    }
+    console.log('total', userData.total);
+
     const users = (userData.data || []).map(item => {
         return {
             id: item._id,
-            fullname: item.title,
-            username: item.email,
+            name: item.title,
+            numCourse: 0,
+            actived: item.actived,
             joindate: item.createdAt,
-            role: 1,
-            thumbnail: item.thumbnail ? item.thumbnail.replace('image/upload', 'image/upload//c_thumb,w_200,g_face') : null
+            thumbnail: item.thumbnail ? item.thumbnail.replace('image/upload', 'image/upload/c_thumb,w_200,g_face') : null
+
         }
     });
 
 
     return (
         <div className="page-content-wrapper border">
-            <Modal modalTitle='Create User' show={showModal} onClose ={() => setShowModal(false)} onSubmit={submitNewUser}/>
+            <Modal modalTitle={isUpdate? 'Update User' : 'Create User'} dataUser = {userUpdate}  isUpdate={isUpdate} show={showModal} onClose ={onClose} onSubmit={submitNewUser}/>
             <div className="row mb-3">
                 <div className="col-12 d-sm-flex justify-content-between align-items-center">
                     <h1 className="h3 mb-2 mb-sm-0">Course Category Manager</h1>
-                    <a className="btn btn-sm btn-primary mb-0" onClick={(e) => {console.log('ss');setShowModal(true)}}>Create new Category</a>
+                    <a className="btn btn-sm btn-primary mb-0" onClick={(e) => {setShowModal(true)}}>Create new Category</a>
                 </div>
             </div>
 
@@ -125,8 +163,9 @@ const AdminUser = (props) => {
 
                             <thead>
                                 <tr>
-                                    <th scope="col" className="border-0 rounded-start">Course category Name</th>
+                                    <th scope="col" className="border-0 rounded-start">Category Name</th>
                                     <th scope="col" className="border-0">Course Numbers</th>
+                                    <th scope="col" className="border-0">isActived</th>
                                     <th scope="col" className="border-0">Created at</th>
                                     <th scope="col" className="border-0 rounded-end">Action</th>
                                 </tr>
@@ -136,7 +175,7 @@ const AdminUser = (props) => {
                             <tbody>
                                 {
                                     users.map((item, index) => {
-                                        return <UserItem id={item.id} fullname = {item.fullname} thumbnail={item.thumbnail} joindate = {item.joindate} role={item.role} key={index}/>
+                                        return <CategoryItem id={item.id} name = {item.name} actived={item.actived} thumbnail={item.thumbnail} joindate = {item.joindate} numCourse={item.numCourse} onDelete={onDelete} onUpdate = {onUpdate} key={index}/>
                                     })
                                 }
                             </tbody>

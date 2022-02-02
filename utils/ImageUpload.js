@@ -17,4 +17,21 @@ const imageUpload = async (...images) => {
     return response;
 }
 
-export {imageUpload};
+const deleteImageUpload = async(...images) => {
+    let imgArr = [];
+    let response = {};
+    for(let item of images) {
+
+        const res = await fetch(process.env.NEXT_PUBLIC_CLOUD_DELETE_API, {
+            method: 'POST',
+            body: JSON.stringify({public_ids: [item]})
+        });
+        const data = await res.json();
+        response = data;
+    }
+    return response;
+}
+
+
+
+export {imageUpload, deleteImageUpload};

@@ -1,64 +1,16 @@
 import React, { useContext } from 'react'
 import Link from 'next/link'
+import { slug } from '../../utils/commonFunctions';
 const CourseList = ({courseList = []}) => {
-    courseList = [
-        {
-            id: 1,
-            source : '/assets/images/01.jpeg',
-            title: 'Digital Marketing',
-            numCourses: 23,
-            link : '#'
-        },
-        {
-            id: 2,
-            source : '/assets/images/03.jpeg',
-            title: 'Figma',
-            numCourses: 16,
-            link : '#'
-        },
-        {
-            id: 3,
-            source : '/assets/images/05.jpeg',
-            title: 'Python',
-            numCourses: 32,
-            link : '#'
-        },
-        {
-            id: 4,
-            source : '/assets/images/06.jpeg',
-            title: 'Angular',
-            numCourses: 48,
-            link : '#'
-        },
-        {
-            id: 5,
-            source : '/assets/images/07.jpeg',
-            title: 'React Native',
-            numCourses: 31,
-            link : '/course-category/react-native'
-        },
-        {
-            id: 6,
-            source : '/assets/images/08.jpeg',
-            title: 'Sketch',
-            numCourses: 38,
-            link : '#'
-        },
-        {
-            id: 7,
-            source : '/assets/images/09.jpeg',
-            title: 'Javascript',
-            numCourses: 33,
-            link : '#'
-        },
-        {
-            id: 8,
-            source : '/assets/images/10.jpeg',
-            title: 'Boostrap',
-            numCourses: 62,
-            link : '#'
+    courseList = courseList.map(item => {
+        return {
+            id: item._id,
+            title: item.title,
+            source: item.thumbnail,
+            numCourses: 0,
+            link: `/course-category/${slug(item.title)}-${item._id}`
         }
-    ];
+    });
 
     return (
         <section>

@@ -28,7 +28,6 @@ export const getData = async (url, params, token, isFE = true) => {
         if(status == 401)
             Router.reload();
     }
-    console.log(res);
     const data = await res.json();
     return data;
 }
@@ -76,16 +75,24 @@ export const patchData = async (url, post, token) => {
     return data;
 }
 
-export const DELETEData = async (url) => {
-    const res = await fetch(`${baseUrl}/api/${url}`, {
+export const deleteData = async (url, id, isFE = true) => {
+    let token = ''
+    if(isFE) {
+        token = getCookies1('accessToken');
+    }
+    const res = await fetch(`${baseUrl}/api/${url}?id=${id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('accessToken')
+            'Authorization': token
         }
     });
     const data = await res.json();
     return data;
+}
+
+function timeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 export const handleFetchData = async (dispatch, method, args,  shouldSuccess = true, shouldLoading = true, shouldBlur = false) => {
@@ -94,12 +101,14 @@ export const handleFetchData = async (dispatch, method, args,  shouldSuccess = t
     const res = await method.apply(this, args);
     if(res.err) {
         dispatch && dispatch({type: 'NOTIFY', payload: {error: res.err, loading: false, blur: false}})
+        await timeout(1500);
         return null;
     }
 
-    if(shouldSuccess) 
+    if(shouldSuccess) {    
         dispatch && dispatch({type: 'NOTIFY', payload: {success: res.msg, loading: false, blur: false}})
-    else 
+        await timeout(1500);   
+    } else 
         dispatch && dispatch({type: 'NOTIFY', payload: {loading: false, blur: false}})
     return res.data || res.msg;
 }

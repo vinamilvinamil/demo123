@@ -147,7 +147,7 @@ const Home = (props) => {
             
             </div>
         </div>
-        <CourseList/>
+        <CourseList courseList = {props.data?.data}/>
     </div>
     )
 };

@@ -27,7 +27,6 @@ export const runCors =  async (req, res) => {
 
 export const withGuest = async (handler, req, res) => {
     try{
-        console.log(req.headers);
         const token = getCookie(req.headers.cookie, '_atc');
         if(!token) return res.status(400).json({err: 'Invalid Authentication'})
     

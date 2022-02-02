@@ -9,10 +9,10 @@ export async function getServerSideProps({req}) {
         pageSize: 10
     }
     const res = await getData('auth/courseCategory', params, token, false);
-    console.log(res)
     return {
         props: {
-            data: res.data || null
+            data: res.data || null,
+            total: res.total || 0
         }
     }
 }
