@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 
 const DetailCourseCategory = (props) => {
-
+    const category = props.data?.data?.category || {};
     return (
         <main>
             <section className="bg-blue align-items-center d-flex" style={{backgroundImage:'url(/assets/images/pattern/04.png)', backgroundSize:'cover'}}>
@@ -9,7 +9,7 @@ const DetailCourseCategory = (props) => {
                     <div className="row">
                         <div className="col-12 text-center">
 
-                            <h1 className="text-white">React Native</h1>
+                            <h1 className="text-white">{category.title}</h1>
 
                         </div>
                     </div>

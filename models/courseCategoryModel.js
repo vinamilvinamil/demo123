@@ -1,4 +1,5 @@
-import mongoose from 'mongoose'
+import mongoose, { Schema } from 'mongoose';
+import { TABLE_MODEL } from '../utils/Constants';
 
 const courseCategorySchema = new mongoose.Schema ({
     title: {
@@ -21,11 +22,17 @@ const courseCategorySchema = new mongoose.Schema ({
     isDeleted: {
         type: Boolean,
         default: false
-    }
+    },
+    courses: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: TABLE_MODEL.COURSE
+        }
+    ]
 }, {
     timestamps: true
 })
 
-let Dataset = mongoose.models.courseCategory || mongoose.model('courseCategory', courseCategorySchema);
+let Dataset = mongoose.models.courseCategory || mongoose.model(TABLE_MODEL.COURSE_CATEGORY, courseCategorySchema);
 
 export default Dataset;
