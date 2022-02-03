@@ -114,7 +114,7 @@ const AdminUser = (props) => {
         setIsUpdate(false);
         setShowModal(false);
     }
-    console.log('total', userData.total);
+    console.log('data', userData.data);
 
     const users = (userData.data || []).map(item => {
         return {

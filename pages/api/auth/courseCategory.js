@@ -25,6 +25,11 @@ const getCourseCategory = async (req, res) => {
         const pageIndex = (parseInt(req.query.pageIndex) || 1) - 1;
         const pageSize = parseInt(req.query.pageSize) || 100;
         const categorys = await CourseCategory.find({isDeleted: {'$ne': true}})
+                            // .populate({
+                            //     path: 'courses',
+                            //     // Explicitly exclude `_id`, see http://bit.ly/2aEfTdB
+                            //     //select: 'title'
+                            // })
                             .limit(pageSize)
                             .skip(pageSize * pageIndex);
         const total = await CourseCategory.find({isDeleted: {'$ne': true}}).count();
