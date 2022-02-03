@@ -39,6 +39,10 @@ const courseSchema = new mongoose.Schema ({
         type: Number,
         default: 0
     },
+    isActived: {
+        type: Boolean,
+        default: false
+    },
     isDeleted: {
         type: Boolean,
         default: false
@@ -51,6 +55,6 @@ const courseSchema = new mongoose.Schema ({
     timestamps: true
 })
 
-let Dataset = mongoose.models.courseSchema || mongoose.model(TABLE_MODEL.COURSE, courseSchema);
+let Dataset = mongoose.models.course || mongoose.model(TABLE_MODEL.COURSE, courseSchema);
 
 export default Dataset;
