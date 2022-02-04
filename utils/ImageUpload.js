@@ -4,7 +4,7 @@ const imageUpload = async (...images) => {
     for(let item of images) {
         const formData = new FormData();
         formData.append('file', item);
-        formData.append('upload_preset', 'nextjs_course_detail');
+        formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUD_UPDATE_PRESET);
         formData.append('cloud_name', process.env.NEXT_PUBLIC_CLOUD_NAME)
 
         const res = await fetch(process.env.NEXT_PUBLIC_CLOUD_API, {

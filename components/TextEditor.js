@@ -46,7 +46,6 @@ const TextEditorComponent = ({value, placeholder = '', onChange}) => {
 
     async function saveToServer(file) {
         const media = await imageUpload(file);
-        console.log('media', media);
         insertToEditor(media.url);
     }
 
