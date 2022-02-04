@@ -6576,6 +6576,8 @@ textarea.form-control-lg {
 
   .modal-dialog-centered {
     min-height: calc(100% - 3.5rem);
+    max-width: 500px;
+    margin: 1.75rem auto;
   }
 
   .modal-sm {

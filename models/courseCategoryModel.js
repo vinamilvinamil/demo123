@@ -22,13 +22,7 @@ const courseCategorySchema = new mongoose.Schema ({
     isDeleted: {
         type: Boolean,
         default: false
-    },
-    courses: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: TABLE_MODEL.COURSE
-        }
-    ]
+    }
 }, {
     timestamps: true
 })

@@ -25,11 +25,12 @@ const getCourses = async (req, res) => {
     try {
         const pageIndex = (parseInt(req.query.pageIndex) || 1) - 1;
         const pageSize = parseInt(req.query.pageSize) || 100;
-        const courses = await Courses.find({isDeleted: {'$ne': true}}).populate({
-                                path: 'category',
-                                // Explicitly exclude `_id`, see http://bit.ly/2aEfTdB
-                                select: 'title'
-                            })
+        const courses = await Courses.find({isDeleted: {'$ne': true}})
+                            // .populate({
+                            //     path: 'category',
+                            //     // Explicitly exclude `_id`, see http://bit.ly/2aEfTdB
+                            //     select: 'title'
+                            // })
                             .limit(pageSize)
                             .skip(pageSize * pageIndex);
         const total = await Courses.find({isDeleted: {'$ne': true}}).count();

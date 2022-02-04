@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react'
+import moment from 'moment';
 import Modal from './CreateUserModal';
 import Toast from '../../components/Toast';
 import {DataContext} from '../../store/GlobalStore';
@@ -33,7 +34,7 @@ const UserItem = ({id, fullname, username, role, joindate, root, resetPassword})
             </div>
         </td>
         <td>
-            {joindate}
+            {moment(joindate).format('DD MMM YYYY')}
         </td>
 
         <td>

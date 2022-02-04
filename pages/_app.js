@@ -11,7 +11,6 @@ function MyApp(props) {
         <DataProvider>
             
             <Script src="/static/bootstrap.bundle.min.js"></Script>
-            <Script src="/static/choices.min.js" strategy='beforeInteractive'></Script>
             <Script src="/static/functions.js"></Script>
             <Script src="/static/OverlayScrollbars.min.js"></Script>
             <Layout menus = {menus}>

@@ -19,8 +19,11 @@ a {
 @import url('./loading.css');
 @import url('./product.css');
 @import url('./audioplayer.css');
+@import url('./select.css');
+@import url('./quill.snow.css');
 @import url('./style.css');
+
 @import url('./all.min.css');
 @import url('./bootstrap-icons.css');
-@import url('./choices.min.css');
 @import url('./OverlayScrollbars.min.css');
+@import url('./bs-stepper.min.css');

@@ -6,6 +6,17 @@ const COURSE_LEVEL = {
     ALL_LEVEL: 3
 };
 
+const COURSE_STATUS = {
+    PENDING: 0,
+    LIVE: 1,
+    REJECTED: 2
+};
+
+const MONEY_UNIT = {
+    DOLA: '$',
+    VND : 'đ'
+};
+
 const COURSE_LEVEL_TITLE = [
     'Beginner',
     'Intermediate',
@@ -18,4 +29,4 @@ const TABLE_MODEL = {
     'COURSE': 'course'
 }
 
-export {COURSE_LEVEL, COURSE_LEVEL_TITLE, TABLE_MODEL}
+export {COURSE_LEVEL, COURSE_LEVEL_TITLE, COURSE_STATUS, TABLE_MODEL, MONEY_UNIT}

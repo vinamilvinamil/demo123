@@ -36,7 +36,6 @@ Table Of Content
 26 STICKY ELEMENT
 27 OVERLAY SCROLLBARS
 ====================== */
-
 "use strict";
 !function () {
 

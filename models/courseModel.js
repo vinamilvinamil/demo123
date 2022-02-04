@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
-import { COURSE_LEVEL, TABLE_MODEL } from '../utils/Constants';
+import { COURSE_LEVEL, TABLE_MODEL , COURSE_STATUS} from '../utils/Constants';
 
 const courseSchema = new mongoose.Schema ({
     title: {
@@ -42,6 +42,10 @@ const courseSchema = new mongoose.Schema ({
     isActived: {
         type: Boolean,
         default: false
+    },
+    status: {
+        type: Number,
+        default: COURSE_STATUS.PENDING
     },
     isDeleted: {
         type: Boolean,

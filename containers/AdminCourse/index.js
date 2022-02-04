@@ -1,7 +1,9 @@
 import { useState, useEffect, useContext } from 'react'
 import {DataContext} from '../../store/GlobalStore';
 import {postData, handleFetchData, getData} from '../../utils/fetchData'
+import {MONEY_UNIT} from '../../utils/Constants'
 import {useRouter} from 'next/router'
+import Link from 'next/link';
 
 const CourseItem = ({data, resetPassword}) => (
     <tr>
@@ -63,9 +65,11 @@ const CourseItem = ({data, resetPassword}) => (
              <div className="d-flex align-items-center">
                 <div className="ms-2">
                     {
-                        data.status ?
+                        data.status == 0 ?
+                        <h6 className="mb-0 fw-light badge bg-warning bg-opacity-15 text-warning">Pending</h6>
+                        : data.status == 1 ?
                         <h6 className="mb-0 fw-light badge bg-success bg-opacity-15 text-success">Live</h6>
-                        : <h6 className="mb-0 fw-light badge bg-warning bg-opacity-15 text-warning">Pending</h6>
+                        : <h6 className="mb-0 fw-light badge bg-secondary bg-opacity-85">Rejected</h6>
                     }
                     
                 </div>
@@ -74,7 +78,7 @@ const CourseItem = ({data, resetPassword}) => (
 
         <td>
             {
-                data.status ?
+                data.status != 0?
                 <a href="#" className="btn btn-sm btn-dark me-1 mb-1 mb-md-0">Edit</a>
                 : 
                 <>
@@ -134,18 +138,17 @@ const AdminCourses = (props) => {
             category: item.category?.title || '',
             addedDate: item.createdAt || '3/3/1333',
             type: item.level,
-            price: item.price + '$',
-            status: item.isActived
+            price: item.price + MONEY_UNIT.DOLA,
+            status: item.status
         }
     });
-
 
     return (
         <div className="page-content-wrapper border">
             <div className="row mb-3">
                 <div className="col-12 d-sm-flex justify-content-between align-items-center">
                     <h1 className="h3 mb-2 mb-sm-0">Courses Manager</h1>
-                    <a className="btn btn-sm btn-primary mb-0" onClick={(e) => {console.log('ss');setShowModal(true)}}>Create new Course</a>
+                    <Link href='/admin/courses/create'><a className="btn btn-sm btn-primary mb-0">Create new Course</a></Link>
                 </div>
             </div>
 
