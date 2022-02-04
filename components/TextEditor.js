@@ -2,7 +2,6 @@ import React, {useEffect, useMemo, useRef} from 'react';
 import 'react-quill/dist/quill.snow.css';
 import { imageUpload} from '../utils/ImageUpload';
 import dynamic from 'next/dynamic';
-// eslint-disable-next-line react/display-name
 const ReactQuill = dynamic(
     async () => {
       const { default: RQ } = await import("react-quill");
