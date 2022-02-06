@@ -36,6 +36,7 @@ const Step1Component = ({ optionsCategory, active = false , changepPageTab}) => 
         description: ''
     });
     const [description, setDescription] = useState('');
+    const [endText, setEndText] = useState('');
 
     const onTextChange = (e, name) => {
         const text = e.target.value;
@@ -63,6 +64,29 @@ const Step1Component = ({ optionsCategory, active = false , changepPageTab}) => 
     const onTextEditorChange = (value, name) => {
         //console.log(value);
         setDescription(value);
+        setEndText(convertText(value))
+    }
+
+    const convertText = (text) => {
+        const regexVideo = /(\[\[\[\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]\]\]\])/ig; //video
+        const resultVideo = text.match(regexVideo);
+        if(resultVideo) {
+            resultVideo.forEach(holder => {
+                let video = holder;
+                video = video.replace('[[[', iframeStart).replace(']]]', iframgeEnd);
+                text = text.replaceAll(holder, video)
+            });
+        }
+        const regexImage = /(\{\{\{\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]\}\}\})/ig; //image
+        const resultImage = text.match(regexImage);
+        if(resultImage) {
+            resultImage.forEach(holder => {
+                let image = holder;
+                image = image.replace('{{{', imageStart).replace('}}}', imageEnd);
+                text = text.replaceAll(holder, image)
+            });
+        }
+        return text;
     }
     return (
         <div id="step-1" role="tabpanel" className={`content fade ${active? 'active dstepper-block ' : 'dstepper-none'}`} aria-labelledby="steppertrigger1">
@@ -159,7 +183,15 @@ const Step1Component = ({ optionsCategory, active = false , changepPageTab}) => 
 
                 <div className='col-12'>
                     <label className="form-label">Add description</label>
+                    <label className="form-label px-4">{`image: {{{url}}}`}</label>
+                    <label className="form-label">{`video: [[[url]]]`}</label>
                     <TextEditorComponent value={description} onChange={(value) => onTextEditorChange(value, 'description')}/>
+                </div>
+
+                <div className='col-12 ql-snow'>
+                    <div className='ql-editor'>
+                        <div dangerouslySetInnerHTML={{__html: endText}}></div>
+                    </div>
                 </div>
 
                 <div className="d-flex justify-content-end mt-3">
@@ -171,6 +203,12 @@ const Step1Component = ({ optionsCategory, active = false , changepPageTab}) => 
 
     )
 };
+
+const iframeStart = `<iframe class="ql-video" width="560" height="315" frameborder="0" allowfullscreen="true" src="`
+const iframgeEnd = `"></iframe><p><br></p>`;
+const imageStart = `<img src="`;
+const imageEnd = `"/>`;
+
 
 
 export default Step1Component;

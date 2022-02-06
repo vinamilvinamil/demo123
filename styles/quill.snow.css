@@ -307,7 +307,7 @@
   padding-right: 28.5em;
 }
 .ql-editor .ql-video {
-  display: block;
+  /* display: block; */
   max-width: 100%;
 }
 .ql-editor .ql-video.ql-align-center {

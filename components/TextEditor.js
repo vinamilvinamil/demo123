@@ -1,5 +1,4 @@
 import React, {useEffect, useMemo, useRef} from 'react';
-import 'react-quill/dist/quill.snow.css';
 import { imageUpload} from '../utils/ImageUpload';
 import dynamic from 'next/dynamic';
 const ReactQuill = dynamic(
@@ -22,7 +21,7 @@ const TextEditorComponent = ({value, placeholder = '', onChange}) => {
         'align',
         'color', 'background',
         'bold', 'italic', 'underline', 'strike', 'blockquote',
-        'list', 'bullet', 'indent',
+        'list', 'script', 'bullet', 'indent',
         'link', 'image'
     ];
 
@@ -58,19 +57,21 @@ const TextEditorComponent = ({value, placeholder = '', onChange}) => {
         toolbar: {
             container: [
                 //[{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
-                [{ size: [] }],
+                [{header: [1, 2, 3, 4, 5, false]}, { size: [] }],
                 ['code-block'],
-                [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }],
+                [{ align: [] }],
                 [{
                     'color': ['#000000', '#e60000', '#ff9900', '#ffff00', '#008a00', '#0066cc', '#9933ff', '#ffffff', '#facccc', '#ffebcc', '#ffffcc', '#cce8cc', '#cce0f5', '#ebd6ff', '#bbbbbb', '#f06666', '#ffc266', '#ffff66', '#66b966', '#66a3e0', '#c285ff', '#888888', '#a10000', '#b26b00', '#b2b200', '#006100', '#0047b2', '#6b24b2', '#444444', '#5c0000', '#663d00', '#666600', '#003700', '#002966', '#3d1466', 'color-picker']
                 },
                 { 'background': ['#000000', '#e60000', '#ff9900', '#ffff00', '#008a00', '#0066cc', '#9933ff', '#ffffff', '#facccc', '#ffebcc', '#ffffcc', '#cce8cc', '#cce0f5', '#ebd6ff', '#bbbbbb', '#f06666', '#ffc266', '#ffff66', '#66b966', '#66a3e0', '#c285ff', '#888888', '#a10000', '#b26b00', '#b2b200', '#006100', '#0047b2', '#6b24b2', '#444444', '#5c0000', '#663d00', '#666600', '#003700', '#002966', '#3d1466', 'color-picker'] }],
                 ['bold', 'italic', 'underline', 'strike', 'blockquote'],
                 [{ 'list': 'ordered' }, { 'list': 'bullet' },
+                {'script': 'sub'}, {'script': 'super'},
                 { 'indent': '-1' }, { 'indent': '+1' }],
-                ['link', 'image'],
+                ['link', 'image', 'video'],
                 ['clean']
-            ],
+            ]
+            ,
 
             handlers: {
                 image: imageHandler,
