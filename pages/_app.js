@@ -13,6 +13,7 @@ function MyApp(props) {
             <Script src="/static/bootstrap.bundle.min.js"></Script>
             <Script src="/static/functions.js"></Script>
             <Script src="/static/OverlayScrollbars.min.js"></Script>
+            <Script src="/static/highlight.min.js"></Script>
             <Layout menus = {menus}>
                 <Component {...pageProps} />
             </Layout>

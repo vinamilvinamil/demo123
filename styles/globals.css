@@ -22,7 +22,7 @@ a {
 @import url('./select.css');
 @import url('./quill.snow.css');
 @import url('./style.css');
-
+@import url('./monokai-sublime.min.css');
 @import url('./all.min.css');
 @import url('./bootstrap-icons.css');
 @import url('./OverlayScrollbars.min.css');

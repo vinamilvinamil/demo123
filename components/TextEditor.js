@@ -54,6 +54,7 @@ const TextEditorComponent = ({value, placeholder = '', onChange}) => {
     }
 
     const modules = useMemo(() => ({
+        syntax: true,
         toolbar: {
             container: [
                 //[{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
