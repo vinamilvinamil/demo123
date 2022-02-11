@@ -5,7 +5,6 @@
 * @version 1.1.0
 **/
 
-
 /* ===================
 Table Of Content
 ======================
@@ -39,6 +38,7 @@ Table Of Content
 "use strict";
 !function () {
 
+    
     window.Element.prototype.removeClass = function () {
         let className = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : "",
             selectors = this;

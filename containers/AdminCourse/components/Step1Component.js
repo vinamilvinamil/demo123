@@ -4,7 +4,7 @@ import SelectSearch, { fuzzySearch } from 'react-select-search';
 import { COURSE_LEVEL_TITLE, COURSE_LEVEL } from '../../../utils/Constants'
 import TextEditorComponent from '../../../components/TextEditor';
 
-const Step1Component = ({ optionsCategory, active = false , changepPageTab}) => {
+const Step1Component = ({ optionsCategory, active = false , changepPageTab, _data, _description, onNext}) => {
 
     const optionsLanguage = [
         { name: 'English', value: 'en' },
@@ -21,21 +21,8 @@ const Step1Component = ({ optionsCategory, active = false , changepPageTab}) => 
 
 
 
-    const [data, setData] = useState({
-        courseTitle: '',
-        shortDes: '',
-        category: null,
-        level: null,
-        language: null,
-        isFeature: false,
-        courseTime: null,
-        lecture: null,
-        price: null,
-        discount: null,
-        isDiscount: false,
-        description: ''
-    });
-    const [description, setDescription] = useState('');
+    const [data, setData] = useState(_data);
+    const [description, setDescription] = useState(_description);
     const [endText, setEndText] = useState('');
 
     const onTextChange = (e, name) => {
@@ -87,6 +74,10 @@ const Step1Component = ({ optionsCategory, active = false , changepPageTab}) => 
             });
         }
         return text;
+    }
+
+    const onSubmit = () => {
+        onNext(data, description);
     }
     return (
         <div id="step-1" role="tabpanel" className={`content fade ${active? 'active dstepper-block ' : 'dstepper-none'}`} aria-labelledby="steppertrigger1">
@@ -195,7 +186,7 @@ const Step1Component = ({ optionsCategory, active = false , changepPageTab}) => 
                 </div>
 
                 <div className="d-flex justify-content-end mt-3">
-                    <button className="btn btn-primary next-btn mb-0" onClick={(e) => {e.preventDefault(); changepPageTab(1)}}>Next</button>
+                    <button className="btn btn-primary next-btn mb-0" onClick={(e) => {e.preventDefault(); changepPageTab(1); onSubmit()}}>Next</button>
                 </div>
             </div>
 

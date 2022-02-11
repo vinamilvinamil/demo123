@@ -14,7 +14,6 @@ const Modal = ({ show, modalTitle, onClose, onSubmit, dataUser, isUpdate }) => {
     const imageRef = useRef();
 
     useEffect(() => {
-        console.log(show, isUpdate, dataUser);
         if(isUpdate && dataUser) {
             setTitle(dataUser.title);
             setShortDescription(dataUser.description);

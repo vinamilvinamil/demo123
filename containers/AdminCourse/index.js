@@ -3,7 +3,6 @@ import {DataContext} from '../../store/GlobalStore';
 import {postData, handleFetchData, getData} from '../../utils/fetchData'
 import {MONEY_UNIT} from '../../utils/Constants'
 import {useRouter} from 'next/router'
-import Link from 'next/link';
 
 const CourseItem = ({data, resetPassword}) => (
     <tr>
@@ -148,7 +147,7 @@ const AdminCourses = (props) => {
             <div className="row mb-3">
                 <div className="col-12 d-sm-flex justify-content-between align-items-center">
                     <h1 className="h3 mb-2 mb-sm-0">Courses Manager</h1>
-                    <Link href='/admin/courses/create'><a className="btn btn-sm btn-primary mb-0">Create new Course</a></Link>
+                    <a href='/admin/courses/create' className="btn btn-sm btn-primary mb-0">Create new Course</a>
                 </div>
             </div>
 

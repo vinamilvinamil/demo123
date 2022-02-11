@@ -4,22 +4,7 @@ import SelectSearch, { fuzzySearch } from 'react-select-search';
 import { COURSE_LEVEL_TITLE, COURSE_LEVEL } from '../../../utils/Constants'
 import TextEditorComponent from '../../../components/TextEditor';
 
-const Step1Component = ({ optionsCategory, active = false, changepPageTab }) => {
-
-    const optionsLanguage = [
-        { name: 'English', value: 'en' },
-        { name: 'Tiếng Việt', value: 'vi' },
-        { name: 'French', value: 'fr' },
-        { name: 'German', value: 'gr' },
-    ];
-    const optionsLevel = [
-        { value: COURSE_LEVEL.BEGINNER, name: COURSE_LEVEL_TITLE[COURSE_LEVEL.BEGINNER] },
-        { value: COURSE_LEVEL.INTERMEDIATE, name: COURSE_LEVEL_TITLE[COURSE_LEVEL.INTERMEDIATE] },
-        { value: COURSE_LEVEL.ADVANCED, name: COURSE_LEVEL_TITLE[COURSE_LEVEL.ADVANCED] },
-        { value: COURSE_LEVEL.ALL_LEVEL, name: COURSE_LEVEL_TITLE[COURSE_LEVEL.ALL_LEVEL] },
-    ]
-
-
+const Step2Component = ({ optionsCategory, active = false, changepPageTab }) => {
 
     const [data, setData] = useState({
         courseTitle: '',
@@ -105,22 +90,12 @@ const Step1Component = ({ optionsCategory, active = false, changepPageTab }) => 
                         <label className="form-label">Video URL</label>
                         <input className="form-control" type="text" placeholder="Enter video url" />
                     </div>
-                    <div className="position-relative my-4">
-                        <hr />
-                        <p className="small position-absolute top-50 start-50 translate-middle bg-body px-3 mb-0">Or</p>
-                    </div>
-                    <div className="col-12">
-                        <label className="form-label">Upload video</label>
-                        <div className="input-group mb-3">
-                            <input type="file" className="form-control" id="inputGroupFile01" />
-                            <label className="input-group-text">.mp4</label>
-                        </div>
-                    </div>
+                    
                     <h5 className="mt-4">Video preview</h5>
                     <div className="position-relative">
                         <img src="/assets/images/about/04.jpeg" className="rounded-4" alt="" />
                         <div className="position-absolute top-50 start-50 translate-middle">
-                            <a href="https://www.youtube.com/embed/tXHviS-4ygo" className="btn btn-lg text-danger btn-round btn-white-shadow mb-0" data-gallery="video-tour">
+                            <a href="https://www.youtube.com/embed/tXHviS-4ygo" className="btn btn-lg text-danger btn-round btn-white-shadow mb-0" data-glightbox data-gallery="video-tour">
                                 <i className="fas fa-play"></i>
                             </a>
                         </div>
@@ -139,4 +114,4 @@ const Step1Component = ({ optionsCategory, active = false, changepPageTab }) => 
 };
 
 
-export default Step1Component;
+export default Step2Component;

@@ -12,8 +12,23 @@ import AddLectureModal from './components/AddLectureModal';
 import AddTopicModal from './components/AddTopicModal';
 import AddFAQModal from './components/AddFAQModal';
 import ConfirmModal from './components/ConfirmModal';
+import Head from 'next/head';
+import Script from 'next/script'
 
-
+const Page1DefaultData = {
+    courseTitle: '',
+    shortDes: '',
+    category: null,
+    level: null,
+    language: null,
+    isFeature: false,
+    courseTime: '',
+    lecture: '',
+    price: '',
+    discount: '',
+    isDiscount: false,
+    description: ''
+};
 const AdminCreateCourses = (props) => {
     const [showAddLecture, setShowAddLecture] = useState(false);
     const [showAddTopic, setShowAddTopic] = useState(false);
@@ -21,6 +36,7 @@ const AdminCreateCourses = (props) => {
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [state, dispatch] = useContext(DataContext);
     const [pageActive, setPageActive] = useState(1);
+    const [dataPage1, setDataPage1] = useState({data: Page1DefaultData, description: ''});
     const router = useRouter();
     const categoryList = (props.data?.data || []).map(item => {
         return {
@@ -63,8 +79,20 @@ const AdminCreateCourses = (props) => {
     const onShowConfirmModal = () => {
         setShowConfirmModal(true);
     }
+
+    //page 1
+    const onPage1Submit = (_data, _description) => {
+        setDataPage1({
+            data: _data,
+            description: _description
+        })
+    }
+    console.log(dataPage1);
     return (
         <div className="container">
+            <Head>
+            <Script src="/static/glightbox.js"></Script>
+            </Head>
         <AddLectureModal modalTitle={'Add Lecture'} isUpdate={false} show={showAddLecture} onClose ={() => setShowAddLecture(false)} onSubmit={submitNewUser}/>
         <AddTopicModal modalTitle={'Add Topic'} isUpdate={false} show={showAddTopic} onClose ={() => setShowAddTopic(false)} onSubmit={submitNewUser}/>
 		<AddFAQModal modalTitle={'Add FAQ'} isUpdate={false} show={showAddFAQ} onClose ={() => setShowAddFAQ(false)} onSubmit={submitNewUser}/>
@@ -133,7 +161,7 @@ const AdminCreateCourses = (props) => {
 					
 					<div className="bs-stepper-content">
 						<form onSubmit={() => {return false}}>
-                            <Step1Component optionsCategory = {categoryList} active={pageActive == 1} changepPageTab={changepPageTab}/>
+                            <Step1Component optionsCategory = {categoryList} active={pageActive == 1} changepPageTab={changepPageTab} _data={dataPage1.data} _description={dataPage1.description} onNext={onPage1Submit}/>
                             <Step2Component optionsCategory = {categoryList} active={pageActive == 2} changepPageTab = {changepPageTab}/>
                             <Step3Component optionsCategory = {categoryList} active={pageActive == 3} changepPageTab ={changepPageTab} onShowAddLectureModal= {onShowAddLectureModal} onShowAddTopicModal={onShowAddTopicModal}/>
                             <Step4Component optionsCategory = {categoryList} active={pageActive == 4} changepPageTab = {changepPageTab} onShowAddFAQModal={onShowAddFAQModal} showConfirmModal={setShowConfirmModal}/>
