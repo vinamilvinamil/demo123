@@ -5,38 +5,9 @@ const errors = (value) => {
 }
 
 const ConfirmModal = ({ show, modalTitle, onClose, onSubmit, dataUser, isUpdate }) => {
-    const [title, setTitle] = useState('');
-    const [error, setError] = useState({});
-
-    useEffect(() => {
-        console.log(show, isUpdate, dataUser);
-        if(isUpdate && dataUser) {
-            setTitle(dataUser.title);
-        } else {
-            setTitle('');
-        }
-        setError({});
-    }, [show]);
-
-    const validateData = () => {
-        const error = {};
-        if (!title) error.title = '* Bat buoc'
-        return error;
-    }
 
     const handleSubmit = () => {
-        const error = validateData();
-        if (Object.keys(error).length > 0) {
-            setError(error);
-            return;
-        }
-        setError({});
-        const data = {
-            id: dataUser?._id || null,
-            title: title
-        }
-        console.log(data);
-        //onSubmit(data);
+        onSubmit();
     }
 
     return (

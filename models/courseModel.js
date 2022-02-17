@@ -7,6 +7,10 @@ const courseSchema = new mongoose.Schema ({
         required: true,
         trim: true
     },
+    shortDescription: {
+        type: String,
+        default: ''
+    },
     description: {
         type: String,
         required: false
@@ -46,6 +50,14 @@ const courseSchema = new mongoose.Schema ({
     status: {
         type: Number,
         default: COURSE_STATUS.PENDING
+    },
+    discount: {
+        type: Number,
+        default: 0
+    },
+    isDiscount: {
+        type: Boolean,
+        default: false
     },
     isDeleted: {
         type: Boolean,

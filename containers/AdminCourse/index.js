@@ -1,16 +1,17 @@
 import { useState, useEffect, useContext } from 'react'
 import {DataContext} from '../../store/GlobalStore';
 import {postData, handleFetchData, getData} from '../../utils/fetchData'
-import {MONEY_UNIT} from '../../utils/Constants'
+import {COURSE_STATUS, MONEY_UNIT} from '../../utils/Constants'
 import {useRouter} from 'next/router'
+import moment from 'moment';
 
-const CourseItem = ({data, resetPassword}) => (
+const CourseItem = ({data, resetPassword, changeStatus}) => (
     <tr>
         <td>
             <div className="d-flex align-items-center position-relative">
 
                 <div className="w-60px">
-                    <img src="/Eduport - LMS, Education and Course Theme_files/01.jpg" className="rounded" alt="" />
+                    <img src={data.thumbnail || "/Eduport - LMS, Education and Course Theme_files/01.jpg"} className="rounded" alt="" />
                 </div>
 
                 <h6 className="mb-0 ms-2">
@@ -81,8 +82,8 @@ const CourseItem = ({data, resetPassword}) => (
                 <a href="#" className="btn btn-sm btn-dark me-1 mb-1 mb-md-0">Edit</a>
                 : 
                 <>
-                    <button className="btn btn-sm btn-success-soft me-1 mb-1 mb-md-0">Approval</button>
-                    <button className="btn btn-sm btn-secondary-soft mb-0" onClick={() => resetPassword(id)}>Reject</button>
+                    <button className="btn btn-sm btn-success-soft me-1 mb-1 mb-md-0" onClick={() => changeStatus(data.id, COURSE_STATUS.LIVE)}>Approval</button>
+                    <button className="btn btn-sm btn-secondary-soft mb-0" onClick={() => changeStatus(data.id, COURSE_STATUS.REJECTED)}>Reject</button>
                 </>
             }
            
@@ -91,7 +92,6 @@ const CourseItem = ({data, resetPassword}) => (
 )
 
 const AdminCourses = (props) => {
-    console.log(props);
     const [showModal, setShowModal] = useState(false);
     const [userData, setUserData] = useState(props.data);
     const [state, dispatch] = useContext(DataContext);
@@ -120,6 +120,19 @@ const AdminCourses = (props) => {
         }
     }
 
+    const changeStatus = async (id, status) => {
+        const body = {
+            requestType: 3,
+            id: id,
+            status: status
+        };
+        const data = await handleFetchData(dispatch, postData, ['auth/courses', body], true, true, true) 
+        if(data) {
+            //router.push('admin/user')
+            window.location.reload();
+        }
+    }
+
     const onPageChange = async (page) => {
         const params = {
             pageIndex: page,
@@ -135,8 +148,9 @@ const AdminCourses = (props) => {
             id: item._id,
             courseName: item.title,
             category: item.category?.title || '',
-            addedDate: item.createdAt || '3/3/1333',
+            addedDate: moment(item.createdAt).format('DD/MM/YYYY') || '3/3/1333',
             type: item.level,
+            thumbnail: item.thumbnail,
             price: item.price + MONEY_UNIT.DOLA,
             status: item.status
         }
@@ -189,7 +203,7 @@ const AdminCourses = (props) => {
                             <tbody>
                                 {
                                     courses.map((item, index) => {
-                                        return <CourseItem data = {item} key={index}/>
+                                        return <CourseItem data = {item} key={index} changeStatus = {changeStatus}/>
                                     })
                                 }
                             </tbody>

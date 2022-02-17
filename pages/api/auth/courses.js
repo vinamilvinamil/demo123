@@ -3,7 +3,11 @@ import {TABLE_MODEL} from '../../../utils/Constants';
 import Courses from '../../../models/courseModel';
 import auth , {withProtect, runCors} from '../../../middleware/auth'
 import { returnResponse } from '../../../utils/commonFunctions';
-
+const REQUEST_ID = {
+    POST_CREATE_NEW: 1,
+    POST_UPDATE: 2,
+    POST_UPDATE_STATUS: 3
+};
 connectDB();
 const indexApi = async (req, res) => {
     console.log(req.url)
@@ -13,7 +17,15 @@ const indexApi = async (req, res) => {
         await withProtect(getCourses,req, res, 'root', 'root');
         break;
         case 'POST': 
-            await withProtect(createCategory, req, res, 'root');
+            switch(req.body.requestType) {
+                case REQUEST_ID.POST_CREATE_NEW :
+                    await withProtect(createCategory, req, res, 'root');
+                    break;
+                case REQUEST_ID.POST_UPDATE_STATUS:
+                    await withProtect(updateStatus, req, res, 'root');
+                    break;
+            }
+           
             break;
         case 'DELETE':
             await withProtect(deleteCategory,req, res, 'root');
@@ -47,15 +59,19 @@ const getCourses = async (req, res) => {
 
 const createCategory = async (req, res) => {
     try {
-        const {title, shortTerm, thumbnail, isActived, id} = req.body;
+        console.log('create courses', req.body);
+        console.log('11111');
+        //const {title, shortTerm, thumbnail, isActived, id} = req.body;
+        const bodyData = req.body;
+        console.log('xxxx');
         // const errMsg = valid(name, email, password, cf_password);
         // if(errMsg) return res.status(400).json({err: errMsg})
         let category;
         let message ;
-        if(id) {
+        if(bodyData.id) {
             category = await Courses.findOne({_id: id});
         }
-
+        
         if(category) {
             category.title = title;
             category.description = shortTerm;
@@ -63,12 +79,39 @@ const createCategory = async (req, res) => {
             category.actived = isActived;
             message = 'Update category success'
         } else {
-            category = new Courses({title: title, description: shortTerm, thumbnail: thumbnail, actived: isActived});
-            message = 'Create new category success';
+            category = new Courses({
+                title: bodyData.courseTitle, 
+                description: bodyData.description, 
+                shortDescription: bodyData.shortDes,
+                thumbnail: bodyData.thumbnail, 
+                level: bodyData.level || 0,
+                price: bodyData.price,
+                time: bodyData.courseTime,
+                lecture: bodyData.lecture,
+                isActived: bodyData.isFeature,
+                category: bodyData.category,
+                isDiscount: bodyData.isDiscount,
+            });
+            message = 'Create new course success';
         }
         await category.save();
         res.json({msg: message});
     }catch(err) {
+        console.log(err);
+        return res.status(500).json({err: err.message})
+    }
+}
+
+const updateStatus = async (req, res) => {
+    try{
+        console.log('query', req.query);
+        const {id, status} = req.body;
+        const category = await Courses.findOne({_id: id});
+        if(!category) return res.status(400).json({err: 'This category is not existed'})
+        category.status = status;
+        await category.save();
+        res.json({msg: 'Update course status success'})
+    } catch(err) {
         return res.status(500).json({err: err.message})
     }
 }

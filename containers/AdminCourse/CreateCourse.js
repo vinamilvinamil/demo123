@@ -14,6 +14,7 @@ import AddFAQModal from './components/AddFAQModal';
 import ConfirmModal from './components/ConfirmModal';
 import Head from 'next/head';
 import Script from 'next/script'
+import { imageUpload } from '../../utils/ImageUpload';
 
 const Page1DefaultData = {
     courseTitle: '',
@@ -37,6 +38,7 @@ const AdminCreateCourses = (props) => {
     const [state, dispatch] = useContext(DataContext);
     const [pageActive, setPageActive] = useState(1);
     const [dataPage1, setDataPage1] = useState({data: Page1DefaultData, description: ''});
+    const [datapage2, setDataPage2] = useState({});
     const router = useRouter();
     const categoryList = (props.data?.data || []).map(item => {
         return {
@@ -87,16 +89,44 @@ const AdminCreateCourses = (props) => {
             description: _description
         })
     }
-    console.log(dataPage1);
+
+    //page 2
+    const onPage2Submit = (_data) => {
+        setDataPage2({
+            ..._data
+        });
+    }
+
+    const onSubmit = async () => {
+        const userData = {...dataPage1.data, description: dataPage1.description, ...datapage2};
+        userData.requestType = 1;
+        setShowConfirmModal(false);
+        console.log('onsubmit', dataPage1, datapage2);
+        const thumbnail = userData.thumbnailFile;
+        let media
+        if(thumbnail) {
+            dispatch({type: 'NOTIFY', payload: {loading: true, blur: true}})
+            media = await imageUpload(thumbnail);
+            console.log('media', media);
+            userData.thumbnail = media.url;
+            userData.thumbnailFile = null;
+        }
+        const data = await handleFetchData(dispatch, postData, ['auth/courses', userData], true, true, true) 
+        if(data) {
+            //setShowModal(false);
+            //onPageChange(1);
+            window.location.href = '/admin/courses';
+        }
+    }
     return (
         <div className="container">
-            <Head>
+            {/* <Head>
             <Script src="/static/glightbox.js"></Script>
-            </Head>
+            </Head> */}
         <AddLectureModal modalTitle={'Add Lecture'} isUpdate={false} show={showAddLecture} onClose ={() => setShowAddLecture(false)} onSubmit={submitNewUser}/>
         <AddTopicModal modalTitle={'Add Topic'} isUpdate={false} show={showAddTopic} onClose ={() => setShowAddTopic(false)} onSubmit={submitNewUser}/>
 		<AddFAQModal modalTitle={'Add FAQ'} isUpdate={false} show={showAddFAQ} onClose ={() => setShowAddFAQ(false)} onSubmit={submitNewUser}/>
-        <ConfirmModal  show={showConfirmModal} onClose ={() => setShowConfirmModal(false)} onSubmit={() => {}}/>
+        <ConfirmModal  show={showConfirmModal} onClose ={() => setShowConfirmModal(false)} onSubmit={onSubmit}/>
         <div className="row">
           <div className="col-12">
 				<h1 className="h2 m-2 mb-4">Create new course</h1>
@@ -162,9 +192,9 @@ const AdminCreateCourses = (props) => {
 					<div className="bs-stepper-content">
 						<form onSubmit={() => {return false}}>
                             <Step1Component optionsCategory = {categoryList} active={pageActive == 1} changepPageTab={changepPageTab} _data={dataPage1.data} _description={dataPage1.description} onNext={onPage1Submit}/>
-                            <Step2Component optionsCategory = {categoryList} active={pageActive == 2} changepPageTab = {changepPageTab}/>
+                            <Step2Component optionsCategory = {categoryList} active={pageActive == 2} changepPageTab = {changepPageTab} onNext={onPage2Submit}/>
                             <Step3Component optionsCategory = {categoryList} active={pageActive == 3} changepPageTab ={changepPageTab} onShowAddLectureModal= {onShowAddLectureModal} onShowAddTopicModal={onShowAddTopicModal}/>
-                            <Step4Component optionsCategory = {categoryList} active={pageActive == 4} changepPageTab = {changepPageTab} onShowAddFAQModal={onShowAddFAQModal} showConfirmModal={setShowConfirmModal}/>
+                            <Step4Component optionsCategory = {categoryList} active={pageActive == 4} changepPageTab = {changepPageTab} onShowAddFAQModal={onShowAddFAQModal} showConfirmModal={setShowConfirmModal} onNext = {onSubmit}/>
                         </form>
 					</div>
 				</div>
