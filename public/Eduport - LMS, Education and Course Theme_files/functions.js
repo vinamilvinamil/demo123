@@ -468,7 +468,8 @@ var e = {
             var lb = GLightbox({
                 selector: '*[data-glightbox]',
                 openEffect: 'fade',
-                closeEffect: 'fade'
+                closeEffect: 'fade',
+                autoplayVideos: false
             });
         }
     },

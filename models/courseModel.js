@@ -19,6 +19,10 @@ const courseSchema = new mongoose.Schema ({
         type: String,
         required: true
     },
+    video: {
+        type: String,
+        required: false
+    },
     favorited: {
         type: Boolean,
         default: false
@@ -66,6 +70,10 @@ const courseSchema = new mongoose.Schema ({
     category: {
         type: Schema.Types.ObjectId,
         ref: TABLE_MODEL.COURSE_CATEGORY
+    },
+    curriculum: {
+        type: String,
+        required: true
     }
 }, {
     timestamps: true

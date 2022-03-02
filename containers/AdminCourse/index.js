@@ -79,7 +79,7 @@ const CourseItem = ({data, resetPassword, changeStatus}) => (
         <td>
             {
                 data.status != 0?
-                <a href="#" className="btn btn-sm btn-dark me-1 mb-1 mb-md-0">Edit</a>
+                <a href={`/admin/courses/update?id=${data.id}`} className="btn btn-sm btn-dark me-1 mb-1 mb-md-0">Edit</a>
                 : 
                 <>
                     <button className="btn btn-sm btn-success-soft me-1 mb-1 mb-md-0" onClick={() => changeStatus(data.id, COURSE_STATUS.LIVE)}>Approval</button>

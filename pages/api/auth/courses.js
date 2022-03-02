@@ -14,7 +14,12 @@ const indexApi = async (req, res) => {
     await runCors(req, res);
     switch (req.method) {
         case 'GET' : 
-        await withProtect(getCourses,req, res, 'root', 'root');
+        if(req.query.id) {
+            await withProtect(getDetailCourse,req, res, 'root', 'root');
+        }else {
+            await withProtect(getCourses,req, res, 'root', 'root');
+        }
+        
         break;
         case 'POST': 
             switch(req.body.requestType) {
@@ -57,26 +62,50 @@ const getCourses = async (req, res) => {
     }
 }
 
+const getDetailCourse = async (req, res) => {
+    console.log('getDetailCourse', req.query.id)
+    try{
+        const id = req.query.id;
+        const course = await Courses.findOne({_id: id});
+        const data = {
+            data: course || null
+        };
+        returnResponse(res,200, '', data);
+    } catch(err) {
+        return res.status(500).json({err: err.message})
+    }
+}
+
 const createCategory = async (req, res) => {
     try {
         console.log('create courses', req.body);
         console.log('11111');
         //const {title, shortTerm, thumbnail, isActived, id} = req.body;
         const bodyData = req.body;
-        console.log('xxxx');
+        console.log('xxxx', bodyData);
         // const errMsg = valid(name, email, password, cf_password);
         // if(errMsg) return res.status(400).json({err: errMsg})
         let category;
         let message ;
         if(bodyData.id) {
-            category = await Courses.findOne({_id: id});
+            category = await Courses.findOne({_id: bodyData.id});
         }
         
         if(category) {
-            category.title = title;
-            category.description = shortTerm;
-            category.thumbnail = thumbnail;
-            category.actived = isActived;
+            category.title = bodyData.courseTitle;
+            category.description = bodyData.description;
+            category.shortDescription = bodyData.shortDes;
+            category.thumbnail = bodyData.thumbnail;
+            category.isActived = bodyData.isFeature;
+            category.status = 0;
+            category.level = bodyData.level;
+            category.price = bodyData.price;
+            category.time = bodyData.time;
+            category.lecture = bodyData.lecture;
+            category.category = bodyData.category;
+            category.isDiscount = bodyData.isDiscount;
+            category.video = bodyData.video;
+            category.curriculum = bodyData.curriculum;
             message = 'Update category success'
         } else {
             category = new Courses({
@@ -91,6 +120,8 @@ const createCategory = async (req, res) => {
                 isActived: bodyData.isFeature,
                 category: bodyData.category,
                 isDiscount: bodyData.isDiscount,
+                video: bodyData.video,
+                curriculum: bodyData.curriculum
             });
             message = 'Create new course success';
         }

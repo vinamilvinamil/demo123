@@ -4,7 +4,7 @@ import SelectSearch, { fuzzySearch } from 'react-select-search';
 import { COURSE_LEVEL_TITLE, COURSE_LEVEL } from '../../../utils/Constants'
 import TextEditorComponent from '../../../components/TextEditor';
 
-const Step2Component = ({ optionsCategory, active = false, changepPageTab, dataUser, isUpdate, onNext }) => {
+const Step2Component = ({ optionsCategory, active = false, changepPageTab, _data, isUpdate, onNext }) => {
     const [video, setVideo] = useState('');
     const [thumbnail, setThumbnail] = useState(null);
     const [thumbnailFile, setThumbnailFile] = useState(null);
@@ -24,6 +24,13 @@ const Step2Component = ({ optionsCategory, active = false, changepPageTab, dataU
     //     setThumbnailFile(null);
     //     setError({});
     // }, [active]);
+
+    useEffect(() => {
+        if(!_data.id) return;
+        console.log('use effect page2', _data)
+        setThumbnail(_data.thumbnail);
+        setVideo(_data.video)
+    }, [_data.id])
 
     const changeFileHandler = (event) => {
         setThumbnailFile(event.target.files[0]);

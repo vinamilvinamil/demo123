@@ -6,14 +6,19 @@ const errors = (value) => {
 
 const AddTopicModal = ({ show, modalTitle, onClose, onSubmit, dataUser, isUpdate }) => {
     const [title, setTitle] = useState('');
+    const [link, setLink] = useState('');
+    const [description, setDescription] = useState('');
+    const [isFree, setIsFree] = useState(true);
     const [error, setError] = useState({});
 
     useEffect(() => {
-        console.log(show, isUpdate, dataUser);
         if (isUpdate && dataUser) {
             setTitle(dataUser.title);
         } else {
             setTitle('');
+            setLink('');
+            setDescription('');
+            setIsFree(true);
         }
         setError({});
     }, [show]);
@@ -21,6 +26,7 @@ const AddTopicModal = ({ show, modalTitle, onClose, onSubmit, dataUser, isUpdate
     const validateData = () => {
         const error = {};
         if (!title) error.title = '* Bat buoc'
+        if(!link) error.link = '* Bat buoc';
         return error;
     }
 
@@ -32,11 +38,13 @@ const AddTopicModal = ({ show, modalTitle, onClose, onSubmit, dataUser, isUpdate
         }
         setError({});
         const data = {
-            id: dataUser?._id || null,
-            title: title
+            name: title,
+            link: link,
+            description: description,
+            isFree: isFree
         }
-        console.log(data);
-        //onSubmit(data);
+        //console.log(data);
+        onSubmit(data);
     }
 
     return (
@@ -55,24 +63,26 @@ const AddTopicModal = ({ show, modalTitle, onClose, onSubmit, dataUser, isUpdate
 
                             <div className="col-md-6">
                                 <label className="form-label">Topic name</label>
-                                <input className="form-control" type="text" placeholder="Enter topic name" />
+                                <input className="form-control" type="text" placeholder="Enter topic name" value = {title} onChange={(e) => setTitle(e.target.value)} />
+                                {error.title ? errors(error.title) : null}
                             </div>
 
                             <div className="col-md-6">
                                 <label className="form-label">Video link</label>
-                                <input className="form-control" type="text" placeholder="Enter Video link" />
+                                <input className="form-control" type="text" placeholder="Enter Video link" value = {link} onChange = {(e) => setLink(e.target.value)} />
+                                {error.link ? errors(error.link) : null}
                             </div>
 
                             <div className="col-12 mt-3">
                                 <label className="form-label">Course description</label>
-                                <textarea className="form-control" rows="4" placeholder="" spellcheck="false"></textarea>
+                                <textarea className="form-control" rows="4" placeholder="" spellcheck="false" value = {description} onChange={e => setDescription(e.target.value)}></textarea>
                             </div>
 
                             <div className="col-6 mt-3">
                                 <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                    <input type="radio" className="btn-check" name="options" id="option1" checked={true} />
+                                    <input type="radio" className="btn-check" name="options" id="option1" checked={isFree} onClick={() => setIsFree(true)} />
                                     <label className="btn btn-sm btn-light btn-primary-soft-check border-0 m-0" for="option1">Free</label>
-                                    <input type="radio" className="btn-check" name="options" id="option2" checked={false}/>
+                                    <input type="radio" className="btn-check" name="options" id="option2" checked={!isFree} onClick = {() => setIsFree(false) }/>
                                     <label className="btn btn-sm btn-light btn-primary-soft-check border-0 m-0" for="option2">Premium</label>
                                 </div>
                             </div>

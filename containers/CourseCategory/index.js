@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 
 const DetailCourseCategory = (props) => {
     const category = props.data?.data?.category || {};
+    console.log(category);
     return (
         <main>
             <section className="bg-blue align-items-center d-flex" style={{backgroundImage:'url(/assets/images/pattern/04.png)', backgroundSize:'cover'}}>

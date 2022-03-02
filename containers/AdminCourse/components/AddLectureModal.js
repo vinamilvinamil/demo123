@@ -32,11 +32,9 @@ const AddLectureModal = ({ show, modalTitle, onClose, onSubmit, dataUser, isUpda
         }
         setError({});
         const data = {
-            id: dataUser?._id || null,
             title: title
         }
-        console.log(data);
-        //onSubmit(data);
+        onSubmit(data);
     }
 
     return (

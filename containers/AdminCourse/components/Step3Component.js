@@ -1,7 +1,7 @@
-import { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { COURSE_LEVEL_TITLE, COURSE_LEVEL } from '../../../utils/Constants'
 
-const Step3Component = ({ optionsCategory, active = false , changepPageTab, onShowAddLectureModal, onShowAddTopicModal}) => {
+const Step3Component = ({ optionsCategory, active = false, _data = [], changepPageTab, onShowAddLectureModal, onShowAddTopicModal }) => {
 
     const optionsLanguage = [
         { name: 'English', value: 'en' },
@@ -83,82 +83,49 @@ const Step3Component = ({ optionsCategory, active = false , changepPageTab, onSh
                 </div>
 
                 <div className='accordion accordion-icon accordion-bg-light' id='accordionExample2'>
-                    <div className="accordion-item mb-3">
-                        <h6 className="accordion-header font-base" id="heading-1">
-                            <button className="accordion-button fw-bold rounded d-inline-block d-block pe-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-1" aria-expanded="true" aria-controls="collapse-1">
-                                Introduction of Digital Marketing
-												</button>
-                        </h6>
+                    {
+                        _data.map((lecture) => {
+                            return (
+                                <div className="accordion-item mb-3" key={lecture.id}>
+                                    <h6 className="accordion-header font-base" id={`heading-${lecture.id}`}>
+                                        <button className="accordion-button fw-bold rounded d-inline-block d-block pe-5" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${lecture.id}`} aria-expanded="true" aria-controls={`collapse-${lecture.id}`}>
+                                            {lecture.name}
+                                        </button>
+                                    </h6>
 
-                        <div id="collapse-1" className="accordion-collapse collapse show" aria-labelledby="heading-1" data-bs-parent="#accordionExample2">
-                            <div className="accordion-body mt-3">
-                                <div className="d-flex justify-content-between align-items-center">
-                                    <div className="position-relative">
-                                        <a href="#" className="btn btn-danger-soft btn-round btn-sm mb-0 stretched-link position-static"><i className="fas fa-play"></i></a>
-                                        <span className="ms-2 mb-0 h6 fw-light">Introduction</span>
-                                    </div>
-                                    <div>
-                                        <a href="#" className="btn btn-sm btn-success-soft btn-round me-1 mb-1 mb-md-0"><i className="far fa-fw fa-edit"></i></a>
-                                        <button className="btn btn-sm btn-danger-soft btn-round mb-0"><i className="fas fa-fw fa-times"></i></button>
+                                    <div id={`collapse-${lecture.id}`} className="accordion-collapse collapse show" aria-labelledby="heading-2" data-bs-parent={`#accordionExample${lecture.id}`} >
+                                        <div className="accordion-body mt-3">
+                                            {
+                                                lecture.topics?.map(topic => {
+                                                    return <React.Fragment key = {topic.id}>
+                                                        <div className="d-flex justify-content-between align-items-center">
+                                                            <div className="position-relative">
+                                                                <a href={topic.link} className="btn btn-danger-soft btn-round btn-sm mb-0 stretched-link position-static" data-glightbox data-gallery={`video-tour${lecture.id}-${topic.id}`}><i className="fas fa-play"></i></a>
+                                                                <span className="ms-2 mb-0 h6 fw-light">{topic.name}</span>
+                                                            </div>
+                                                            <div>
+                                                                <a href="#" className="btn btn-sm btn-success-soft btn-round me-1 mb-1 mb-md-0"><i className="far fa-fw fa-edit"></i></a>
+                                                                <button className="btn btn-sm btn-danger-soft btn-round mb-0"><i className="fas fa-fw fa-times"></i></button>
+                                                            </div>
+                                                        </div>
+                                                        <hr />
+                                                    </React.Fragment>
+                                                })
+                                            }
+                                            <a className="btn btn-sm btn-dark mb-0" onClick={() => onShowAddTopicModal(lecture.id)}>
+                                                <i className="bi bi-plus-circle me-2"></i>Add topic
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                                <hr />
-
-                                <div className="d-flex justify-content-between align-items-center">
-                                    <div className="position-relative">
-                                        <a href="#" className="btn btn-danger-soft btn-round btn-sm mb-0 stretched-link position-static"><i className="fas fa-play"></i></a>
-                                        <span className="ms-2 mb-0 h6 fw-light">What is Digital Marketing</span>
-                                    </div>
-                                    <div>
-                                        <a href="#" className="btn btn-sm btn-success-soft btn-round me-1 mb-1 mb-md-0"><i className="far fa-fw fa-edit"></i></a>
-                                        <button className="btn btn-sm btn-danger-soft btn-round mb-0"><i className="fas fa-fw fa-times"></i></button>
-                                    </div>
-                                </div>
-
-                                <hr />
-
-                                <a className="btn btn-sm btn-dark mb-0" onClick={() => onShowAddTopicModal(1)}><i className="bi bi-plus-circle me-2"></i>Add topic</a>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div className="accordion-item mb-3">
-                        <h6 className="accordion-header font-base" id="heading-2">
-                            <button className="accordion-button fw-bold rounded d-inline-block d-block pe-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-2" aria-expanded="true" aria-controls="collapse-2">
-                                Customer Life cycle
-							</button>
-                        </h6>
-
-                        <div id="collapse-2" className="accordion-collapse collapse show" aria-labelledby="heading-2" data-bs-parent="#accordionExample2" >
-                            <div className="accordion-body mt-3">
-                                <a className="btn btn-sm btn-dark mb-0" onClick={() => onShowAddTopicModal(2)}>
-                                    <i className="bi bi-plus-circle me-2"></i>Add topic
-								</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="accordion-item mb-3">
-                        <h6 className="accordion-header font-base" id="heading-3">
-                            <button className="accordion-button fw-bold rounded d-block pe-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-3" aria-expanded="true" aria-controls="collapse-3">
-                                How much should I offer the sellers?
-							</button>
-                        </h6>
-                        <div id="collapse-3" className="accordion-collapse collapse show" aria-labelledby="heading-3" data-bs-parent="#accordionExample2">
-                            <div className="accordion-body mt-3">
-                                <a className="btn btn-sm btn-dark mb-0" onClick={() => onShowAddTopicModal(3)}>
-                                    <i className="bi bi-plus-circle me-2"></i>Add topic
-								</a>
-                            </div>
-                        </div>
-                    </div>
-
+                            )
+                        })
+                    }
                 </div>
 
                 <div className="d-flex justify-content-between mt-3">
-                    <button className="btn btn-secondary prev-btn mb-0" onClick={(e) => {e.preventDefault(); changepPageTab(-1)}}>Previous</button>
-                    <button className="btn btn-primary next-btn mb-0" onClick={(e) => {e.preventDefault(); changepPageTab(1)}}>Next</button>
+                    <button className="btn btn-secondary prev-btn mb-0" onClick={(e) => { e.preventDefault(); changepPageTab(-1) }}>Previous</button>
+                    <button className="btn btn-primary next-btn mb-0" onClick={(e) => { e.preventDefault(); changepPageTab(1) }}>Next</button>
                 </div>
             </div>
 

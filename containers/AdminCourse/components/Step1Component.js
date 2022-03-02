@@ -19,12 +19,18 @@ const Step1Component = ({ optionsCategory, active = false , changepPageTab, _dat
         { value: COURSE_LEVEL.ALL_LEVEL, name: COURSE_LEVEL_TITLE[COURSE_LEVEL.ALL_LEVEL] },
     ]
 
-
-
     const [data, setData] = useState(_data);
     const [description, setDescription] = useState(_description);
     const [endText, setEndText] = useState('');
 
+    console.log('page1', _data, data);
+
+    useEffect(() => {
+        if(!_data.id) return;
+        console.log('use effect page1', _data.id)
+        setData(_data);
+        setDescription(_description);
+    }, [_data.id])
     const onTextChange = (e, name) => {
         const text = e.target.value;
         setData({

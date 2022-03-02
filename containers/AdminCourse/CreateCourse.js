@@ -17,6 +17,7 @@ import Script from 'next/script'
 import { imageUpload } from '../../utils/ImageUpload';
 
 const Page1DefaultData = {
+    id: null,
     courseTitle: '',
     shortDes: '',
     category: null,
@@ -32,20 +33,54 @@ const Page1DefaultData = {
 };
 const AdminCreateCourses = (props) => {
     const [showAddLecture, setShowAddLecture] = useState(false);
-    const [showAddTopic, setShowAddTopic] = useState(false);
+    const [showAddTopic, setShowAddTopic] = useState({
+        visible: false,
+        data: null
+    });
     const [showAddFAQ, setShowAddFAQ] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [state, dispatch] = useContext(DataContext);
     const [pageActive, setPageActive] = useState(1);
     const [dataPage1, setDataPage1] = useState({data: Page1DefaultData, description: ''});
     const [datapage2, setDataPage2] = useState({});
+    const [dataPage3, setDataPage3] = useState([]);
     const router = useRouter();
+    console.log('course prop', props);
     const categoryList = (props.data?.data || []).map(item => {
         return {
             value: item._id,
             name: item.title
         }
     });
+
+    useEffect(() => {
+        if(props.course) {
+            setDataPage1({
+                data: {
+                    id: props.course._id,
+                    courseTitle: props.course.title || '',
+                    shortDes: props.course.shortDescription || '',
+                    category: props.course.category ||  null,
+                    level: props.course.level || null,
+                    language: null,
+                    isFeature: false,
+                    courseTime: props.course.time || '',
+                    lecture: props.course.lecture || '',
+                    price: props.course.price || '',
+                    discount: props.course.discount || '',
+                    isDiscount: props.course.isDiscount || false,
+                    description: ''
+                },
+                description: props.course.description || ''
+            })
+            setDataPage2({
+                id: props.course._id,
+                video: props.course.video || '',
+                thumbnail: props.course.thumbnail || null
+            })
+            setDataPage3(props.course.curriculum ? JSON.parse(props.course.curriculum) : []);
+        }
+    }, []);
 
     const submitNewUser = async (userData) => {
         console.log('submitnewUser', userData);
@@ -67,11 +102,6 @@ const AdminCreateCourses = (props) => {
 
     const onShowAddLectureModal = () => {
         setShowAddLecture(true);
-        setShowConfirmModal(true);
-    }
-
-    const onShowAddTopicModal = (sessionId) => {
-        setShowAddTopic(true);
     }
 
     const onShowAddFAQModal = () => {
@@ -97,8 +127,50 @@ const AdminCreateCourses = (props) => {
         });
     }
 
+    //page 3
+    const onShowAddTopicModal = (lectureId, isUpdate = false, topicId) => {
+        let topic = null;
+        if(isUpdate) {
+            //topic = _page3[lectureId]
+        }
+        setShowAddTopic({
+            visible: true,
+            data: {lectureId: lectureId, topic: topic }
+        });
+    }
+
+    const addNewTopic = (data) => {
+        const lectureId = showAddTopic.data.lectureId;
+        const _page3 = [...dataPage3];
+        for(let i = 0; i < _page3.length; i++) {
+            const lecture = _page3[i];
+            if( lecture.id == lectureId) {
+                const newTopic = {
+                    ...data,
+                    id: lecture.topics.length
+                };
+                lecture.topics.push(newTopic);
+            }
+        }
+        setDataPage3(_page3);
+        setShowAddTopic({
+            visible: false,
+            data: null
+        })
+    } 
+    const addNewLecture = (data) => {
+        setShowAddLecture(false)
+        const _page3 = [...dataPage3];
+        _page3.push({
+            id: _page3.length,
+            name: data.title,
+            topics: []
+        });
+        setDataPage3(_page3);
+    }
+
     const onSubmit = async () => {
-        const userData = {...dataPage1.data, description: dataPage1.description, ...datapage2};
+        const userData = {...dataPage1.data, description: dataPage1.description, ...datapage2, curriculum: JSON.stringify(dataPage3)};
         userData.requestType = 1;
         setShowConfirmModal(false);
         console.log('onsubmit', dataPage1, datapage2);
@@ -123,8 +195,8 @@ const AdminCreateCourses = (props) => {
             {/* <Head>
             <Script src="/static/glightbox.js"></Script>
             </Head> */}
-        <AddLectureModal modalTitle={'Add Lecture'} isUpdate={false} show={showAddLecture} onClose ={() => setShowAddLecture(false)} onSubmit={submitNewUser}/>
-        <AddTopicModal modalTitle={'Add Topic'} isUpdate={false} show={showAddTopic} onClose ={() => setShowAddTopic(false)} onSubmit={submitNewUser}/>
+        <AddLectureModal modalTitle={'Add Lecture'} isUpdate={false} show={showAddLecture} onClose ={() => setShowAddLecture(false)} onSubmit={addNewLecture}/>
+        <AddTopicModal modalTitle={'Add Topic'} isUpdate={false} show={showAddTopic.visible} onClose ={() => setShowAddTopic({visible: false, data: null})} onSubmit={addNewTopic}/>
 		<AddFAQModal modalTitle={'Add FAQ'} isUpdate={false} show={showAddFAQ} onClose ={() => setShowAddFAQ(false)} onSubmit={submitNewUser}/>
         <ConfirmModal  show={showConfirmModal} onClose ={() => setShowConfirmModal(false)} onSubmit={onSubmit}/>
         <div className="row">
@@ -192,8 +264,8 @@ const AdminCreateCourses = (props) => {
 					<div className="bs-stepper-content">
 						<form onSubmit={() => {return false}}>
                             <Step1Component optionsCategory = {categoryList} active={pageActive == 1} changepPageTab={changepPageTab} _data={dataPage1.data} _description={dataPage1.description} onNext={onPage1Submit}/>
-                            <Step2Component optionsCategory = {categoryList} active={pageActive == 2} changepPageTab = {changepPageTab} onNext={onPage2Submit}/>
-                            <Step3Component optionsCategory = {categoryList} active={pageActive == 3} changepPageTab ={changepPageTab} onShowAddLectureModal= {onShowAddLectureModal} onShowAddTopicModal={onShowAddTopicModal}/>
+                            <Step2Component optionsCategory = {categoryList} active={pageActive == 2} changepPageTab = {changepPageTab} _data={datapage2} onNext={onPage2Submit}/>
+                            <Step3Component optionsCategory = {categoryList} active={pageActive == 3} changepPageTab ={changepPageTab} _data={dataPage3} onShowAddLectureModal= {onShowAddLectureModal} onShowAddTopicModal={onShowAddTopicModal}/>
                             <Step4Component optionsCategory = {categoryList} active={pageActive == 4} changepPageTab = {changepPageTab} onShowAddFAQModal={onShowAddFAQModal} showConfirmModal={setShowConfirmModal} onNext = {onSubmit}/>
                         </form>
 					</div>
