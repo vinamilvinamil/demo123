@@ -16,6 +16,16 @@ export function showLog(...messages) {
     }
 }
 
+export function convertLongToHourMinute(times) {
+    const hours = Math.floor(times);
+    const minutes = (times - hours) * 60;
+    let result = '';
+    if(hours > 0) result += hours + 'h ';
+    if(minutes > 0 ) result += minutes + 'm';
+    if(result == '') result = 'Untime'
+    return result;
+}
+
 export function slug(str) {
     str = str.replace(/^\s+|\s+$/g, ''); // trim
     str = str.toLowerCase();

@@ -11,7 +11,7 @@ export async function getServerSideProps({req}) {
             }
         }
     };
-    const res = await getData(`courseCategory/${id}`, null, null, false);
+    const res = await getData(`courses/${id}`, null, null, false);
     return {
         props: {
             data: res.data || null,

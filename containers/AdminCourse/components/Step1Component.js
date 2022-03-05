@@ -27,7 +27,6 @@ const Step1Component = ({ optionsCategory, active = false , changepPageTab, _dat
 
     useEffect(() => {
         if(!_data.id) return;
-        console.log('use effect page1', _data.id)
         setData(_data);
         setDescription(_description);
     }, [_data.id])

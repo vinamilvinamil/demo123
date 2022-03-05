@@ -42,7 +42,7 @@ const getCourses = async (req, res) => {
     try {
         const pageIndex = (parseInt(req.query.pageIndex) || 1) - 1;
         const pageSize = parseInt(req.query.pageSize) || 100;
-        const courses = await Courses.find({isDeleted: {'$ne': true}})
+        const courses = await Courses.find({isDeleted: {'$ne': true}}, { _id: 1, title:1, thumbnail:1, category: 1, categoryName: 1, createdAt:1,  updatedAt: 1, status: 1, level: 1, price: 1})
                             // .populate({
                             //     path: 'category',
                             //     // Explicitly exclude `_id`, see http://bit.ly/2aEfTdB
@@ -55,6 +55,7 @@ const getCourses = async (req, res) => {
             data: courses,
             total: total
         }
+        console.log('course >>>', data);
         returnResponse(res,200, '', data);
     }catch(err) {
         console.log(err);
@@ -90,7 +91,6 @@ const createCategory = async (req, res) => {
         if(bodyData.id) {
             category = await Courses.findOne({_id: bodyData.id});
         }
-        
         if(category) {
             category.title = bodyData.courseTitle;
             category.description = bodyData.description;
@@ -100,9 +100,10 @@ const createCategory = async (req, res) => {
             category.status = 0;
             category.level = bodyData.level;
             category.price = bodyData.price;
-            category.time = bodyData.time;
+            category.time = bodyData.courseTime;
             category.lecture = bodyData.lecture;
             category.category = bodyData.category;
+            category.categoryName = bodyData.categoryName;
             category.isDiscount = bodyData.isDiscount;
             category.video = bodyData.video;
             category.curriculum = bodyData.curriculum;
@@ -119,6 +120,7 @@ const createCategory = async (req, res) => {
                 lecture: bodyData.lecture,
                 isActived: bodyData.isFeature,
                 category: bodyData.category,
+                categoryName: bodyData.categoryName,
                 isDiscount: bodyData.isDiscount,
                 video: bodyData.video,
                 curriculum: bodyData.curriculum

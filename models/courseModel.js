@@ -17,7 +17,7 @@ const courseSchema = new mongoose.Schema ({
     },
     thumbnail: {
         type: String,
-        required: true
+        required: false
     },
     video: {
         type: String,
@@ -71,9 +71,13 @@ const courseSchema = new mongoose.Schema ({
         type: Schema.Types.ObjectId,
         ref: TABLE_MODEL.COURSE_CATEGORY
     },
+    categoryName: {
+        type: String,
+        required: false
+    },
     curriculum: {
         type: String,
-        required: true
+        required: false
     }
 }, {
     timestamps: true

@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import {DataContext} from '../../store/GlobalStore';
 import {postData, handleFetchData, getData} from '../../utils/fetchData'
-import {MONEY_UNIT} from '../../utils/Constants'
+import {COURSE_LEVEL, MONEY_UNIT} from '../../utils/Constants'
 import {useRouter} from 'next/router'
 import Step1Component from './components/Step1Component';
 import Step2Component from './components/Step2Component';
@@ -21,7 +21,7 @@ const Page1DefaultData = {
     courseTitle: '',
     shortDes: '',
     category: null,
-    level: null,
+    level: COURSE_LEVEL.BEGINNER,
     language: null,
     isFeature: false,
     courseTime: '',
@@ -171,6 +171,9 @@ const AdminCreateCourses = (props) => {
 
     const onSubmit = async () => {
         const userData = {...dataPage1.data, description: dataPage1.description, ...datapage2, curriculum: JSON.stringify(dataPage3)};
+        if(userData.category && categoryList?.length > 0) {
+            userData.categoryName = categoryList.filter(item => item.value == userData.category)[0].name;
+        }
         userData.requestType = 1;
         setShowConfirmModal(false);
         console.log('onsubmit', dataPage1, datapage2);

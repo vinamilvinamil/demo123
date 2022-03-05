@@ -147,7 +147,7 @@ const AdminCourses = (props) => {
         return {
             id: item._id,
             courseName: item.title,
-            category: item.category?.title || '',
+            category: item.categoryName || '',
             addedDate: moment(item.createdAt).format('DD/MM/YYYY') || '3/3/1333',
             type: item.level,
             thumbnail: item.thumbnail,
