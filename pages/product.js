@@ -19,9 +19,9 @@ const Product = () => {
                             onEnded= {() => alert('ended')}
                             />
                          */}
-                        <iframe class="ql-video" width="100%" height="80vh"
+                        <iframe className="ql-video" width="100%" height="80vh"
                         style={{width: '100%', height: '80vh'}}
-                         frameborder="0" allowfullscreen="true" 
+                         frameBorder="0" allowFullScreen="true" 
                          src="https://drive.google.com/file/d/1-b3VayJCBF81PSAjvU-E8hx1-s-Eb0y9/preview">
 
                          </iframe>
