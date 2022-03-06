@@ -296,7 +296,8 @@ var e = {
                     var scTop = window.pageYOffset || document.documentElement.scrollTop;
                     if (scTop >= 400) {
                         stickySpace.addClass('active');
-                        e.select("#sticky-space.active").style.height = stickyHeight + 'px';
+                        if(e.select("#sticky-space.active"))
+                            e.select("#sticky-space.active").style.height = stickyHeight + 'px';
                         stickyNav.addClass('navbar-sticky-on');
                     } else {
                         stickySpace.removeClass('active');

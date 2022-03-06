@@ -1,4 +1,4 @@
-import CourseCategory from '../../containers/CourseCategory';
+import DetailCourse from '../../containers/CourseDetail';
 import {getData, parseToken} from '../../utils/fetchData'
 
 export async function getServerSideProps({req}) {
@@ -22,4 +22,4 @@ export async function getServerSideProps({req}) {
 
 
 
-export default CourseCategory;
+export default DetailCourse;
