@@ -67,7 +67,7 @@ const DetailCourseCategory = (props) => {
                                                             {/* <a href="#" className="h6 text-success mb-0"><i className="far fa-heart"></i></a> */}
                                                         </div>
 
-                                                        <h5 className="card-title"><Link href={`/course-detail/${slug(item.title)}-${ item._id}`}><a>{item.title}</a></Link></h5>
+                                                        <h5 className="card-title"><a href={`/course-detail/${slug(item.title)}-${ item._id}`}>{item.title}</a></h5>
                                                         <p className="mb-2 text-truncate-2">{item.shortDescription}</p>
 
                                                         <ul className="list-inline mb-0">

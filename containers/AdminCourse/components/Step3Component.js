@@ -104,7 +104,7 @@ const Step3Component = ({ optionsCategory, active = false, _data = [], changepPa
                                                                 <span className="ms-2 mb-0 h6 fw-light">{topic.name}</span>
                                                             </div>
                                                             <div>
-                                                                <a href="#" className="btn btn-sm btn-success-soft btn-round me-1 mb-1 mb-md-0"><i className="far fa-fw fa-edit"></i></a>
+                                                                <a className="btn btn-sm btn-success-soft btn-round me-1 mb-1 mb-md-0" onClick={() => onShowAddTopicModal(lecture.id, topic.id, topic)}><i className="far fa-fw fa-edit"></i></a>
                                                                 <button className="btn btn-sm btn-danger-soft btn-round mb-0"><i className="fas fa-fw fa-times"></i></button>
                                                             </div>
                                                         </div>

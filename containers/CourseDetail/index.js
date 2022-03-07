@@ -7,7 +7,7 @@ import TabCurriculum from './TabCurriculum';
 
 const DetailCourse = (props) => {
     const course = props.data?.course || {};
-    console.log(course);
+    //console.log(course);
     const changeTab = () => {
 
     }
@@ -49,7 +49,7 @@ const DetailCourse = (props) => {
                                 <div className="card-body p-4">
                                     <div className="tab-content pt-2" id="course-pills-tabContent">
                                         <TabOverview active={true} course={course} />
-                                        <TabCurriculum active={false} />
+                                        <TabCurriculum active={false} course={course} />
                                     </div>
                                 </div>
 
@@ -64,15 +64,22 @@ const DetailCourse = (props) => {
                                         <div className="overflow-hidden rounded-3">
                                             <img src="/assets/images/08.jpeg" className="card-img" alt="course image" />
 
-                                            <div className="bg-overlay bg-dark opacity-6"></div>
-                                            <div className="card-img-overlay d-flex align-items-start flex-column p-3">
+                                            {
+                                                course.video ?
+                                                    <>
+                                                        <div className="bg-overlay bg-dark opacity-6"></div>
+                                                        <div className="card-img-overlay d-flex align-items-start flex-column p-3">
 
-                                                <div className="m-auto">
-                                                    <a href="https://www.youtube.com/embed/tXHviS-4ygo" className="btn btn-lg text-danger btn-round btn-white-shadow mb-0" data-glightbox="" data-gallery="course-video">
-                                                        <i className="fas fa-play"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
+                                                            <div className="m-auto">
+                                                                <a href={course.video} className="btn btn-lg text-danger btn-round btn-white-shadow mb-0" data-glightbox="" data-gallery="course-video">
+                                                                    <i className="fas fa-play"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </>
+                                                    : null
+                                            }
+
                                         </div>
 
 
@@ -82,11 +89,18 @@ const DetailCourse = (props) => {
 
                                                 <div>
                                                     <div className="d-flex align-items-center">
-                                                        <h3 className="fw-bold mb-0 me-2">$150</h3>
-                                                        <span className="text-decoration-line-through mb-0 me-2">$350</span>
-                                                        <span className="badge bg-orange text-white mb-0">60% off</span>
+                                                        <h3 className="fw-bold mb-0 me-2">${course.price * (1 - course.discount/100.0)}</h3>
+                                                        {
+                                                            course.isDiscount == true ?
+                                                            <>
+                                                             <span className="text-decoration-line-through mb-0 me-2">${course.price}</span>
+                                                            <span className="badge bg-orange text-white mb-0">{course.discount}% off</span>
+                                                            </>
+                                                            : null
+                                                        }
+                                                       
                                                     </div>
-                                                    <p className="mb-0 text-danger"><i className="fas fa-stopwatch me-2"></i>5 days left at this price</p>
+                                                   
                                                 </div>
 
 
@@ -107,8 +121,8 @@ const DetailCourse = (props) => {
 
 
                                             <div className="mt-3 d-sm-flex justify-content-sm-between">
-                                                <a href="#" className="btn btn-outline-primary mb-0">Free trial</a>
-                                                <a href="/product" className="btn btn-success mb-0">Learning course</a>
+                                                {/* <a href="#" className="btn btn-outline-primary mb-0">Free trial</a> */}
+                                                <a href={`/course-learning/${slug(course.title) + '-' + course._id}`} className="btn btn-success mb-0">Learning course</a>
                                             </div>
                                         </div>
                                     </div>
@@ -125,7 +139,7 @@ const DetailCourse = (props) => {
                                             </li>
                                             <li className="list-group-item d-flex justify-content-between align-items-center">
                                                 <span className="h6 fw-light mb-0"><i className="fas fa-fw fa-clock text-primary"></i>Duration</span>
-                                                <span>4h 50m</span>
+                                                <span>{convertLongToHourMinute(course.time)}</span>
                                             </li>
                                             <li className="list-group-item d-flex justify-content-between align-items-center">
                                                 <span className="h6 fw-light mb-0"><i className="fas fa-fw fa-signal text-primary"></i>Skills</span>

@@ -128,28 +128,29 @@ const AdminCreateCourses = (props) => {
     }
 
     //page 3
-    const onShowAddTopicModal = (lectureId, isUpdate = false, topicId) => {
-        let topic = null;
-        if(isUpdate) {
-            //topic = _page3[lectureId]
-        }
+    const onShowAddTopicModal = (lectureId, topicId = null, topic = null) => {
         setShowAddTopic({
             visible: true,
-            data: {lectureId: lectureId, topic: topic }
+            data: {lectureId: lectureId , topicId: topicId, topic: topic }
         });
     }
 
     const addNewTopic = (data) => {
         const lectureId = showAddTopic.data.lectureId;
+        const topicId = showAddTopic.data.topicId;
         const _page3 = [...dataPage3];
         for(let i = 0; i < _page3.length; i++) {
             const lecture = _page3[i];
             if( lecture.id == lectureId) {
-                const newTopic = {
-                    ...data,
-                    id: lecture.topics.length
-                };
-                lecture.topics.push(newTopic);
+                if(topicId == null) {
+                    const newTopic = {
+                        ...data,
+                        id: lecture.topics.length
+                    };
+                    lecture.topics.push(newTopic);
+                } else {
+                    lecture.topics[topicId] = {...data};
+                }
             }
         }
         setDataPage3(_page3);
@@ -176,13 +177,11 @@ const AdminCreateCourses = (props) => {
         }
         userData.requestType = 1;
         setShowConfirmModal(false);
-        console.log('onsubmit', dataPage1, datapage2);
         const thumbnail = userData.thumbnailFile;
         let media
         if(thumbnail) {
             dispatch({type: 'NOTIFY', payload: {loading: true, blur: true}})
             media = await imageUpload(thumbnail);
-            console.log('media', media);
             userData.thumbnail = media.url;
             userData.thumbnailFile = null;
         }
@@ -199,7 +198,7 @@ const AdminCreateCourses = (props) => {
             <Script src="/static/glightbox.js"></Script>
             </Head> */}
         <AddLectureModal modalTitle={'Add Lecture'} isUpdate={false} show={showAddLecture} onClose ={() => setShowAddLecture(false)} onSubmit={addNewLecture}/>
-        <AddTopicModal modalTitle={'Add Topic'} isUpdate={false} show={showAddTopic.visible} onClose ={() => setShowAddTopic({visible: false, data: null})} onSubmit={addNewTopic}/>
+        <AddTopicModal modalTitle={'Add Topic'} data={showAddTopic.data?.topic} show={showAddTopic.visible} onClose ={() => setShowAddTopic({visible: false, data: null})} onSubmit={addNewTopic}/>
 		<AddFAQModal modalTitle={'Add FAQ'} isUpdate={false} show={showAddFAQ} onClose ={() => setShowAddFAQ(false)} onSubmit={submitNewUser}/>
         <ConfirmModal  show={showConfirmModal} onClose ={() => setShowConfirmModal(false)} onSubmit={onSubmit}/>
         <div className="row">

@@ -13,14 +13,66 @@ const indexApi = async (req, res) => {
         case 'GET':
             await getDetailCourse(req, res);
             break;
+        case 'POST':
+            await getCourseEnroll(req, res);
+    }
+}
+
+const getCourseEnroll = async (req, res) => {
+    try {
+        const id = req.query.id || '';
+        let  currentCourse = await Courses.findOne({ _id: id, isDeleted: false, status: {'$ne': COURSE_STATUS.PENDING} }, {isDeleted: 0, status: 0});
+        if(currentCourse) {
+            let curriculum = currentCourse.curriculum ? JSON.parse(currentCourse.curriculum) : [];
+            curriculum = curriculum.map(item => {
+                const newObject = {
+                    id: item.id,
+                    name: item.name
+                };
+                const topics = (item.topics || []).map(topic => {
+                    return {
+                        name: topic.name,
+                        id: topic.id
+                    }
+                })
+                newObject.topics = topics;
+                return newObject;
+            })
+            currentCourse.curriculum = JSON.stringify(curriculum);
+        }
+        //console.log(currentCourse);
+        const data = {
+            course: currentCourse
+        }
+        returnResponse(res, 200, '', data);
+    } catch (err) {
+        return res.status(500).json({ err: err.message })
     }
 }
 
 const getDetailCourse = async (req, res) => {
     try {
         const id = req.query.id || '';
-        let  currentCourse = await Courses.findOne({ _id: id, isDeleted: false, status: {'$ne': COURSE_STATUS.PENDING} }, {video: 0, curriculum: 0, isDeleted: 0, status: 0});
-
+        let  currentCourse = await Courses.findOne({ _id: id, isDeleted: false, status: {'$ne': COURSE_STATUS.PENDING} }, {isDeleted: 0, status: 0});
+        if(currentCourse) {
+            let curriculum = currentCourse.curriculum ? JSON.parse(currentCourse.curriculum) : [];
+            curriculum = curriculum.map(item => {
+                const newObject = {
+                    id: item.id,
+                    name: item.name
+                };
+                const topics = (item.topics || []).map(topic => {
+                    return {
+                        name: topic.name,
+                        id: topic.id
+                    }
+                })
+                newObject.topics = topics;
+                return newObject;
+            })
+            currentCourse.curriculum = JSON.stringify(curriculum);
+        }
+        //console.log(currentCourse);
         const data = {
             course: currentCourse
         }

@@ -4,7 +4,7 @@ const errors = (value) => {
     return <label className="text-danger">{value}</label>
 }
 
-const AddTopicModal = ({ show, modalTitle, onClose, onSubmit, dataUser, isUpdate }) => {
+const AddTopicModal = ({ show, modalTitle, onClose, onSubmit, data}) => {
     const [title, setTitle] = useState('');
     const [link, setLink] = useState('');
     const [description, setDescription] = useState('');
@@ -12,8 +12,11 @@ const AddTopicModal = ({ show, modalTitle, onClose, onSubmit, dataUser, isUpdate
     const [error, setError] = useState({});
 
     useEffect(() => {
-        if (isUpdate && dataUser) {
-            setTitle(dataUser.title);
+        if (data) {
+            setTitle(data.name);
+            setLink(data.link);
+            setDescription(data.description);
+            setIsFree(data.isFree);
         } else {
             setTitle('');
             setLink('');
@@ -37,14 +40,15 @@ const AddTopicModal = ({ show, modalTitle, onClose, onSubmit, dataUser, isUpdate
             return;
         }
         setError({});
-        const data = {
+        const _data = {
+            id: data ? data.id : -1,
             name: title,
             link: link,
             description: description,
             isFree: isFree
         }
         //console.log(data);
-        onSubmit(data);
+        onSubmit(_data);
     }
 
     return (

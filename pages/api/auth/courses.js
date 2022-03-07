@@ -105,6 +105,7 @@ const createCategory = async (req, res) => {
             category.category = bodyData.category;
             category.categoryName = bodyData.categoryName;
             category.isDiscount = bodyData.isDiscount;
+            category.discount = bodyData.discount;
             category.video = bodyData.video;
             category.curriculum = bodyData.curriculum;
             message = 'Update category success'
@@ -122,6 +123,7 @@ const createCategory = async (req, res) => {
                 category: bodyData.category,
                 categoryName: bodyData.categoryName,
                 isDiscount: bodyData.isDiscount,
+                discount: bodyData.discount,
                 video: bodyData.video,
                 curriculum: bodyData.curriculum
             });

@@ -38,7 +38,7 @@ const Product = () => {
                             </span>
                         </button>
 
-                        <div className="collapse-horizontal collapse show" id="collapseWidthExample">
+                        <div className="collapse-horizontal collapse" id="collapseWidthExample">
                             <div className="card vh-100 overflow-auto rounded-0 w-280px w-sm-400px">
 
                                 <div className="card-header bg-light rounded-0">
