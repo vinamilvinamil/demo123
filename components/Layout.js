@@ -5,6 +5,15 @@ import Footer from './Footer';
 import AdminNavBar from './AdminNavBar';
 import AdminTopBar from './AdminTopBar';
 import { useRouter } from 'next/router'
+import Router from 'next/router';
+
+Router.onRouteChangeComplete = () => {
+    window.scroll({
+      top: 0,
+      left: 0,
+    });
+};
+
 const Layout = ({ children, menus }) => {
     const [showMenu, setShowMenu] = React.useState(true);
     const [admin, setAdmin] = React.useState(false);
@@ -44,9 +53,9 @@ const Layout = ({ children, menus }) => {
                     <NavBar menus={menus} />
                     : null
             }
-            <section className='position-relative overflow-hidden pt-5 pt-lg-3'>
+            <div className='position-relative overflow-hidden pt-5 pt-lg-3'>
                 {children}
-            </section>
+            </div>
 
             <Footer />
         </div>

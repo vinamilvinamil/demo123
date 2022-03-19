@@ -7,11 +7,11 @@ const NavBar = () => {
     return (
         <nav className={`navbar sidebar navbar-expand-xl navbar-dark bg-dark `} style={menuClosed ? {} : {left: 0}}>
             <div className="d-flex align-items-center">
-                <Link href="/admin">
-                    <a className="navbar-brand" >
+                
+                    <a href="/admin" className="navbar-brand" >
                         <img className="navbar-brand-item" src="/Eduport - LMS, Education and Course Theme_files/logo-light.svg" alt="" />
                     </a>
-                </Link>
+                
             </div>
 
             <div className="offcanvas offcanvas-start flex-row custom-scrollbar h-100 os-host os-theme-dark os-host-resize-disabled os-host-scrollbar-horizontal-hidden os-host-transition os-host-overflow os-host-overflow-y" data-bs-backdrop="true" tabIndex="-1" id="offcanvasSidebar">

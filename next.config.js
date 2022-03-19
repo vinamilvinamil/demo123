@@ -2,6 +2,9 @@ const path = require('path')
 
 
 module.exports = {
+    experimental: {
+        scrollRestoration: false,
+    },
     webpack5: false,
     webpack: (config, options) => {
         // Important: return the modified config

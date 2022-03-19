@@ -82,9 +82,9 @@ const NavBar = ({menus}) => {
                                             length > 0 ?
                                             <a className={`nav-link dropdown-toggle ${item1.active ? 'active' : ''}`} href={item1.link} id="demoMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{item1.title}</a>
                                             : 
-                                            <Link href={item1.link}>
-                                                <a className={`nav-link dropdown-toggle ${item1.active ? 'active' : ''}`} id="demoMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{item1.title}</a>
-                                            </Link>    
+                                            
+                                                <a href={item1.link} className={`nav-link dropdown-toggle ${item1.active ? 'active' : ''}`} id="demoMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{item1.title}</a>
+                                            
                                         }
                                         {
                                             length > 0 ?
@@ -111,11 +111,11 @@ const NavBar = ({menus}) => {
                                                 length == 0 ?
                                                 (
                                                     <li > 
-                                                        <Link href={item1.link}>
-                                                            <a className={`dropdown-item ${item1.active ? 'active' : ''}`} >
+                                                        
+                                                            <a href={item1.link} className={`dropdown-item ${item1.active ? 'active' : ''}`} >
                                                                 {item1.title}
                                                             </a>
-                                                        </Link>
+                                                        
                                                     </li>
                                                 )
                                                 : (

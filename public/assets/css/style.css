@@ -4694,8 +4694,8 @@ textarea.form-control-lg {
           justify-content: space-between;
 }
 .navbar-brand {
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 15px;
+  padding-bottom: 15px;
   margin-right: 1rem;
   font-size: 1.25rem;
   white-space: nowrap;

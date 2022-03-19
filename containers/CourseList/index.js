@@ -44,9 +44,9 @@ const CourseItem = ({source, title, numCourses = 0, link = '#'}) => {
                 <img src={source} alt="" />
                 <div className="card-img-overlay d-flex">
                     <div className="mt-auto card-text">
-                        <Link href={link}>
-                            <a  className="text-white mt-auto h5 stretched-link">{title}</a>
-                        </Link>
+                        
+                            <a href={link}  className="text-white mt-auto h5 stretched-link">{title}</a>
+                        
                         <div className="text-white">{numCourses} Courses</div>
                     </div>
                 </div>

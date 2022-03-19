@@ -5,7 +5,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const parseToken = (req) => {
     let token = '';
-    var match = req.headers.cookie.match(new RegExp('(^| )' + 'accessToken' + '=([^;]+)'));
+    var match = req.headers.cookie?.match(new RegExp('(^| )' + 'accessToken' + '=([^;]+)'));
     if (match) token = match[2];
     return token;
 }
