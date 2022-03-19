@@ -51,6 +51,7 @@ const CourseLearning = (props) => {
                                         width='100%'
                                         height='87vh'
                                         controls={true}
+                                        allowFullScreen={true}
                                         onEnded={() => handleNextVideo()}
                                     />
                             }
