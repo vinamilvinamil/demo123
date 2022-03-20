@@ -8,9 +8,9 @@ const NavBar = () => {
         <nav className={`navbar sidebar navbar-expand-xl navbar-dark bg-dark `} style={menuClosed ? {} : { left: 0 }}>
             <div className="d-flex align-items-center">
                 <Link href="/admin">
-                <a  className="navbar-brand" >
-                    <img className="navbar-brand-item" src="/Eduport - LMS, Education and Course Theme_files/logo-light.svg" alt="" />
-                </a>
+                    <a className="navbar-brand" >
+                        <img className="navbar-brand-item" src="/Eduport - LMS, Education and Course Theme_files/logo-light.svg" alt="" />
+                    </a>
                 </Link>
 
             </div>
@@ -47,16 +47,16 @@ const NavBar = () => {
                          </a>
 
                             <ul className="nav collapse flex-column" id="collapsepage" data-bs-parent="#navbar-sidebar">
-                                <li className="nav-item"> <Link href="/admin/courses"> <a  className="nav-link">All Courses</a></Link></li>
-                                <li className="nav-item"> <Link href='/admin/courses-category'> <a  className="nav-link" >Course Category</a></Link></li>
+                                <li className="nav-item"> <Link href="/admin/courses"><a className="nav-link">All Courses</a></Link></li>
+                                <li className="nav-item"> <Link href="/admin/courses-category"><a className="nav-link" >Course Category</a></Link></li>
                                 <li className="nav-item"> <a className="nav-link" href="https://eduport.webestica.com/admin-course-detail.html">Course Detail</a></li>
                             </ul>
                         </li>
 
 
                         <li className="nav-item">
-                            <Link  href="/admin/user">
-                            <a  className="nav-link" ><i className="fas fa-user-graduate fa-fw me-2"></i>User</a></Link>
+                            <Link href="/admin/user">
+                                <a className="nav-link" ><i className="fas fa-user-graduate fa-fw me-2"></i>User</a></Link>
                         </li>
 
 
