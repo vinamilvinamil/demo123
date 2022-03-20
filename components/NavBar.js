@@ -226,7 +226,7 @@ const NavBar = ({ menus }) => {
                                         <hr />
                                     </li>
 
-                                    <li><a className="dropdown-item" href="/product"><i className="bi bi-person fa-fw me-2"></i>My Profile</a></li>
+                                    <li> <Link href="/product"><a className="dropdown-item" ><i className="bi bi-person fa-fw me-2"></i>My Profile</a></Link></li>
                                     <li><a className="dropdown-item bg-danger-soft-hover" href="#"><i className="bi bi-power fa-fw me-2"></i>Sign Out</a></li>
                                     
 
