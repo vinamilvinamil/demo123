@@ -206,35 +206,35 @@ const NavBar = ({ menus }) => {
                                 </div>
                             </div>
 
-                            <div className="dropdown ms-1 ms-lg-0">
-                                <a className="avatar avatar-sm p-0" href="#" id="profileDropdown" role="button" data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img className="avatar-img rounded-circle" src="/Eduport%20-%20LMS,%20Education%20and%20Course%20Theme_files/01.jpg" alt="avatar" />
-                                </a>
-                                <ul className="dropdown-menu dropdown-animation dropdown-menu-end shadow pt-3" aria-labelledby="profileDropdown">
+                        </div>
 
-                                    <li className="px-3">
-                                        <div className="d-flex align-items-center">
+                        <div className="dropdown ms-1 ms-lg-0">
+                            <a className="avatar avatar-sm p-0" href="#" id="profileDropdown" role="button" data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img className="avatar-img rounded-circle" src="/Eduport%20-%20LMS,%20Education%20and%20Course%20Theme_files/01.jpg" alt="avatar" />
+                            </a>
+                            <ul className="dropdown-menu dropdown-animation dropdown-menu-end shadow pt-3" aria-labelledby="profileDropdown">
 
-                                            <div className="avatar me-3">
-                                                <img className="avatar-img rounded-circle shadow" src="/Eduport%20-%20LMS,%20Education%20and%20Course%20Theme_files/01.jpg" alt="avatar" />
-                                            </div>
-                                            <div>
-                                                <a className="h6" href="#">Lori Ferguson</a>
-                                                <p className="small m-0">example@gmail.com</p>
-                                            </div>
+                                <li className="px-3">
+                                    <div className="d-flex align-items-center">
+
+                                        <div className="avatar me-3">
+                                            <img className="avatar-img rounded-circle shadow" src="/Eduport%20-%20LMS,%20Education%20and%20Course%20Theme_files/01.jpg" alt="avatar" />
                                         </div>
-                                        <hr />
-                                    </li>
+                                        <div>
+                                            <a className="h6" href="#">Lori Ferguson</a>
+                                            <p className="small m-0">example@gmail.com</p>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                </li>
 
-                                    <li> <Link href="/product"><a className="dropdown-item" ><i className="bi bi-person fa-fw me-2"></i>My Profile</a></Link></li>
-                                    <li><a className="dropdown-item bg-danger-soft-hover" href="#"><i className="bi bi-power fa-fw me-2"></i>Sign Out</a></li>
-                                    
+                                <li> <Link href="/product"><a className="dropdown-item" ><i className="bi bi-person fa-fw me-2"></i>My Profile</a></Link></li>
+                                <li><a className="dropdown-item bg-danger-soft-hover" href="#"><i className="bi bi-power fa-fw me-2"></i>Sign Out</a></li>
 
-                                    
 
-                                </ul>
-                            </div>
 
+
+                            </ul>
                         </div>
 
 
