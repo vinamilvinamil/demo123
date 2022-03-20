@@ -17514,7 +17514,7 @@ textarea.form-control-lg {
 }
 
 .card, .overflow-hidden {
-  will-change: transform;
+  /* will-change: transform; */
 }
 
 .card-header-title {
