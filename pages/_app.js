@@ -9,7 +9,6 @@ function MyApp(props) {
     const { Component, pageProps, menus } = props;
     return (
         <DataProvider>
-            <Script src="/static/bootstrap.bundle.min.js"></Script>
             <Script src="/static/glightbox.js" strategy='beforeInteractive'></Script>
             <Script src="/static/functions.js" strategy='afterInteractive'></Script>
             <Script src="/static/OverlayScrollbars.min.js"></Script>

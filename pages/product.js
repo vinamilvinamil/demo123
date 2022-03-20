@@ -5,7 +5,7 @@ const Product = () => {
         <>
             <section className="pt-0">
                 <div className="container-fluid px-0">
-                    <div className="card bg-blue h-100px h-md-200px rounded-0" style={{ backgroundImage: `url('/assets/images/avatar/01.jpg')` }}>
+                    <div className="card bg-blue h-100px rounded-0" style={{ backgroundImage: `url('/assets/images/pattern/04.png')`, backgroundSize: 'cover' }}>
                     </div>
                 </div>
                 <div className="container mt-n4">
@@ -69,7 +69,7 @@ const Product = () => {
                         <div className="col-xl-3">
 
                             <nav className="navbar navbar-light navbar-expand-xl mx-0">
-                                <div className="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel"  aria-hidden="true">
+                                <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel"  aria-hidden="true">
 
                                     <div className="offcanvas-header bg-light">
                                         <h5 className="offcanvas-title" id="offcanvasNavbarLabel">My profile</h5>
