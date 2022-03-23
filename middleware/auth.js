@@ -55,7 +55,7 @@ export const withProtect = async (handler, req, res, ...roles) => {
                 err: 'You not permission to access root'
             })
         }
-        roles[0] = 'admin';
+        //roles[0] = 'admin';
         if(roles.length > 0 && !roles.includes(user.role)) {
             return res.status(403).json({
                 err: 'You not permission to access'

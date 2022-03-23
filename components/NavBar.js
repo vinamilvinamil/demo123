@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/dist/client/router'
@@ -11,7 +11,7 @@ const NavBar = ({ menus }) => {
     const router = useRouter()
     const [state, dispatch] = useContext(DataContext);
     const [menuActive, setMemuActive] = useState('');
-
+    const [user, setUser] = useState({});
     const { auth, cart } = state;
     const isActive = (r) => {
         if (r === router.pathname) {
@@ -21,7 +21,20 @@ const NavBar = ({ menus }) => {
         }
     }
 
+    useEffect(() => {
+        if (localStorage) {
+            const userLocal = JSON.parse(localStorage.getItem('user'));
+            setUser(userLocal);
+        }
+    }, [])
+
     const handleLogout = async () => {
+
+        const token = state.auth.token;
+        const result = await handleFetchData(dispatch, getData, ['user/signout', null, token], false, false)
+
+        if (result == null) return;
+
         removeCookies('refreshtoken');
         removeCookies('_atc');
         setCookies('refreshtoken', '')
@@ -33,8 +46,11 @@ const NavBar = ({ menus }) => {
         setCookies('_atc', '');
         localStorage.removeItem('firstLogin');
         localStorage.removeItem('accessToken')
-        const token = state.auth.token;
-        await handleFetchData(dispatch, getData, ['auth/signout', null, token], false, false)
+        //localStorage.setItem('accessToken', data.access_token)
+        localStorage.removeItem('role');
+        localStorage.removeItem('user');
+        localStorage.removeItem('root');
+
         dispatch({
             type: 'AUTH',
             payload: {}
@@ -44,6 +60,7 @@ const NavBar = ({ menus }) => {
             type: 'NOTIFY',
             payload: { success: 'Logged out!!' }
         })
+        window.location.reload();
 
     }
     const loggedRouter = () => {
@@ -207,35 +224,38 @@ const NavBar = ({ menus }) => {
                             </div>
 
                         </div>
+                        {
+                            user ?
+                                <div className="dropdown ms-1 ms-lg-0">
+                                    <a className="avatar avatar-sm p-0" href="#" id="profileDropdown" role="button" data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img className="avatar-img rounded-circle" src="/Eduport%20-%20LMS,%20Education%20and%20Course%20Theme_files/01.jpg" alt="avatar" />
+                                    </a>
+                                    <ul className="dropdown-menu dropdown-animation dropdown-menu-end shadow pt-3" aria-labelledby="profileDropdown">
 
-                        <div className="dropdown ms-1 ms-lg-0">
-                            <a className="avatar avatar-sm p-0" href="#" id="profileDropdown" role="button" data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img className="avatar-img rounded-circle" src="/Eduport%20-%20LMS,%20Education%20and%20Course%20Theme_files/01.jpg" alt="avatar" />
-                            </a>
-                            <ul className="dropdown-menu dropdown-animation dropdown-menu-end shadow pt-3" aria-labelledby="profileDropdown">
+                                        <li className="px-3">
+                                            <div className="d-flex align-items-center">
 
-                                <li className="px-3">
-                                    <div className="d-flex align-items-center">
+                                                <div className="avatar me-3">
+                                                    <img className="avatar-img rounded-circle shadow" src="/Eduport%20-%20LMS,%20Education%20and%20Course%20Theme_files/01.jpg" alt="avatar" />
+                                                </div>
+                                                <div>
+                                                    <a className="h6" href="#">{user?.name}</a>
+                                                    <p className="small m-0">{user?.email}</p>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                        </li>
 
-                                        <div className="avatar me-3">
-                                            <img className="avatar-img rounded-circle shadow" src="/Eduport%20-%20LMS,%20Education%20and%20Course%20Theme_files/01.jpg" alt="avatar" />
-                                        </div>
-                                        <div>
-                                            <a className="h6" href="#">Lori Ferguson</a>
-                                            <p className="small m-0">example@gmail.com</p>
-                                        </div>
-                                    </div>
-                                    <hr />
-                                </li>
-
-                                <li> <Link href="/product"><a className="dropdown-item" ><i className="bi bi-person fa-fw me-2"></i>My Profile</a></Link></li>
-                                <li><a className="dropdown-item bg-danger-soft-hover" href="#"><i className="bi bi-power fa-fw me-2"></i>Sign Out</a></li>
-
-
-
-
-                            </ul>
-                        </div>
+                                        <li> <Link href="/product"><a className="dropdown-item" ><i className="bi bi-person fa-fw me-2"></i>My Profile</a></Link></li>
+                                        <li><a className="dropdown-item bg-danger-soft-hover" onClick={() => handleLogout()}><i className="bi bi-power fa-fw me-2"></i>Sign Out</a></li>
+                                    </ul>
+                                </div>
+                                :
+                                <div className="dropdown ms-1 ms-lg-0">
+                                    <Link href='/login'><a className="btn btn-primary mb-0" type="button"
+                                    >Login</a></Link>
+                                </div>
+                        }
 
 
 

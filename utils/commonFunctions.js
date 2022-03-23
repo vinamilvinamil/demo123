@@ -90,7 +90,6 @@ export function getCookie(cookies, name) {
 export function getCookies1(name)  {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
-    console.log(document.cookies);
 	for(var i=0;i < ca.length;i++) {
 		var c = ca[i];
 		while (c.charAt(0)==' ') c = c.substring(1,c.length);

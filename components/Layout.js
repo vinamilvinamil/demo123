@@ -15,8 +15,10 @@ Router.onRouteChangeComplete = () => {
 };
 
 const Layout = ({ children, menus }) => {
+    const pageNoHeading = ['/login', '/signup'];
     const [showMenu, setShowMenu] = React.useState(true);
     const [admin, setAdmin] = React.useState(false);
+    const [noHeader, setNoHeader] = React.useState(false);
     const router = useRouter();
     React.useEffect(() => {
         if (localStorage) {
@@ -26,12 +28,24 @@ const Layout = ({ children, menus }) => {
             setShowMenu(shouldShow);
             setAdmin(role == 'admin' && router.pathname.startsWith('/admin'));
 
+            //check show header
+            const pathname = router.pathname;
+            let _noHeader = false;
+            pageNoHeading.map((url, index) => {
+                if(pathname.startsWith(url)) _noHeader = true;
+            })
+            setNoHeader(_noHeader);
             if (role != 'admin' && router.pathname.startsWith('/admin')) {
                 window.location.href = '/signin';
             }
         }
     }, []);
-
+    if(noHeader) {
+        return <div>
+            <Notify />
+            {children}
+        </div>
+    }
     if(admin) {
         return (
             <div>

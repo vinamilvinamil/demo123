@@ -26,7 +26,7 @@ const register = async (req, res) => {
 
         const passwordHash = await bcrypt.hash(password, 12);
 
-        const newUser = new Users({name, email, password: passwordHash, role, root, cf_password});
+        const newUser = new Users({name, email, password: passwordHash, role, root, actived: true});
         await newUser.save()
         res.json({msg: 'Register success'});
     }catch(err) {

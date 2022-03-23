@@ -113,3 +113,10 @@ export const handleFetchData = async (dispatch, method, args,  shouldSuccess = t
     return res.data || res.msg;
 }
 
+export const handleFetchDataWithoutNotify = async (dispatch, method, args) => {
+
+    const res = await method.apply(this, args);
+    return res;
+}
+
+

@@ -91,7 +91,7 @@ const Modal = ({ show, modalTitle, onClose, onSubmit }) => {
 
                     <div className="modal-footer">
                         <button type="button" className="btn btn-danger-soft my-0" data-bs-dismiss="modal" onClick={() => onClose()}>Close</button>
-                        <button type="button" className="btn btn-success my-0" onClick = {() => handleSubmit()}>Change Password</button>
+                        <button type="button" className="btn btn-success my-0" onClick = {() => handleSubmit()}>Create</button>
                     </div>
                 </div>
             </div>
